@@ -1,0 +1,74 @@
+<div class="row">
+	
+	<div class="col-xs-12 col-sm-5 col-md-6 col-lg-7">
+		<h2 ng-bind="oHeader.title"></h2>
+	</div>
+
+	<div class="col-xs-12 col-sm-7 col-md-6 col-lg-5">
+
+		<div class="row header-buttons">
+			
+			<div class="col-xs-3 button">
+				<button class="btn btn-black"
+						ng-click="oHeader.menu.fnPesquisa()"
+						ng-class="oHeader.menu.selected == 1 ? colorSkin.class.btn : ''"
+						ng-disabled="oHeader.menu.selected == 1 ? true : false">
+					<i class="fa fa-search"></i>
+				</button>
+				<div class="info hidden-xs">
+					<div class="arrow-up"></div>
+					<div class="info-text">
+						<div>Pesquisar</div>
+					</div>					
+				</div>
+			</div>
+
+			<div class="col-xs-3 button">
+				<button class="btn btn-black"
+						ng-click="oHeader.menu.fnCadastro()"
+						ng-class="oHeader.menu.selected == 2 ? colorSkin.class.btn : ''"
+						ng-disabled="oHeader.menu.selected == 2 ? true : false">
+					<i class="fa fa-floppy-o"></i>
+				</button>
+				<div class="info hidden-xs">
+					<div class="arrow-up"></div>
+					<div class="info-text">
+						<div>Cadastrar</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-3 button">
+				<button class="btn btn-black"
+						ng-click="oHeader.menu.fnEdicao()"
+						ng-disabled="!oHeader.selected == true ? true : oHeader.menu.selected == 3 ? true : false"
+						ng-class="oHeader.menu.selected == 3 ? colorSkin.class.btn : ''">
+					<i class="fa fa-pencil"></i>
+				</button>
+				<div class="info hidden-xs">
+					<div class="arrow-up"></div>
+					<div class="info-text">
+						<div>Editar</div>
+					</div>					
+				</div>
+			</div>
+
+			<div class="col-xs-3 button">
+				<button class="btn btn-black"
+						ng-click="oHeader.menu.fnExclusao()"
+						ng-disabled="!oHeader.selected">
+					<i class="fa fa-trash"></i>
+				</button>
+				<div class="info hidden-xs">
+					<div class="arrow-up"></div>
+					<div class="info-text">
+						<div>Excluir</div>
+					</div>					
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
+
+</div>

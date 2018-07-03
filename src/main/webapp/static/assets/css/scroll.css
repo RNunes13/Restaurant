@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+
+::-webkit-scrollbar {
+	width: 7px; height: 7px;
+	-webkit-border-radius: 16px;
+}
+
+::-webkit-scrollbar-track-piece {
+	background-color: #FFF;
+	-webkit-border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+	height: 7px;
+	background-color: #222D32;
+	-webkit-border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+	width: 7px;
+	background-color: #222D32;
+	-webkit-border-radius: 3px;
+}

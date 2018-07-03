@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="Restaurant">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+	<meta name="robots" content="noindex">
+
+	<link rel="shortcut icon" href="static/assets/img/favicon.ico" type="image/x-icon">
+
+	<title>Restaurant</title>
+
+	<!-- ************** CSS ************** --> 
+
+	<!-- Custom -->
+	<link rel="stylesheet" href="static/assets/css/main.css">
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="static/assets/plugins/bootstrap/dist/css/bootstrap.min.css">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="static/assets/plugins/font-awesome/css/font-awesome.min.css">
+
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="static/assets/plugins/Ionicons/css/ionicons.min.css">
+
+	<!-- AdminLTE -->
+	<link rel="stylesheet" href="static/assets/plugins/AdminLTE/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="static/assets/plugins/AdminLTE/css/skins/_all-skins.min.css">
+		
+	<!-- Alertify -->
+	<link rel="stylesheet" href="static/assets/plugins/alertify/css/alertify.min.css" />
+	<link rel="stylesheet" href="static/assets/plugins/alertify/css/themes/default.min.css" />
+
+	<!-- NotifIt -->
+	<link rel="stylesheet" type="text/css" href="static/assets/plugins/notifit/css/notifIt.css" />
+
+	<!-- LINEAR ICONS -->
+	<link rel="stylesheet" type="text/css" href="static/assets/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+
+	<!-- DATATABLES CSS -->
+	<link href="static/assets/plugins/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="static/assets/plugins/datatables/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+	<!-- Angular DataTables -->
+    <!-- <link href="static/assets/plugins/angular-datatables/css/angular-datatables.min.css" rel="stylesheet" type="text/css"> -->
+
+	<!-- ************** FIM CSS ************** -->
+
+	<!-- ************** JS ************** -->
+
+	<!-- jQuery -->
+	<script src="static/assets/plugins/jquery/dist/jquery.min.js"></script>
+	<script src="static/assets/plugins/jquery/dist/jquery.form.min.js" type="text/javascript"></script>
+
+	<!-- Bootstrap -->
+	<script src="static/assets/plugins/bootstrap/dist/js/bootstrap.min.js"></script><!-- UI bootstrap -->
+
+	<!-- AdminLTE -->
+	<script src="static/assets/plugins/AdminLTE/js/adminlte.min.js"></script>
+
+	<!-- Alertify -->
+	<script type="text/javascript" src="static/assets/plugins/alertify/alertify.min.js"></script>
+
+	<!-- Notifit -->
+	<script type="text/javascript" src="static/assets/plugins/notifit/js/notifIt.min.js"></script>
+
+	<!-- DATATABLES -->
+	<script type="text/javascript" src="static/assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="static/assets/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="static/assets/plugins/datatables/js/dataTables.responsive.min.js"></script>
+
+	<!-- AngulaJS -->
+	<script src="static/assets/plugins/angular/angular.min.js"></script>
+	<script src="static/assets/plugins/angular/angular-route.min.js"></script>	
+	<script src="static/controllers/app.js"></script>
+	<script src="static/controllers/app-routes.js"></script>
+	<script src="static/controllers/app-services.js"></script>
+	
+	<!-- Controllers Angular -->
+	<script src="static/controllers/controller/notfound_controller.js"></script>
+	<script src="static/controllers/controller/login_controller.js"></script>
+	<script src="static/controllers/controller/home_controller.js"></script>
+	<script src="static/controllers/controller/logout_controller.js"></script>
+	<!-- <script src="static/controllers/controller/usuario_controller.js"></script>
+	<script src="static/controllers/controller/perfil_usuario_controller.js"></script> -->
+
+	<!-- Services Angular -->
+	<script src="static/controllers/services/global_service.js"></script>
+	<script src="static/controllers/services/auth_service.js"></script>
+	
+	<script src="static/assets/plugins/angular/ui-bootstrap-tpls-2.5.0.min.js" type="text/javascript"></script>
+	<script src="static/assets/plugins/angular/ngResource.js" type="text/javascript"></script>
+	<script src="static/assets/plugins/angular/ngStorage.min.js" type="text/javascript"></script>
+
+	<!-- Angular DataTables  -->
+	<script src="static/assets/plugins/angular-datatables/angular-datatables.min.js" type="text/javascript"></script>
+	
+	<!-- UI Bootstrap -->
+	<script src="static/assets/plugins/angular/ui-bootstrap-tpls-2.5.0.min.js" type="text/javascript"></script>
+
+	<!-- Custom -->
+	<script src="static/assets/js/main.js"></script>
+
+	<!-- ************** FIM JS ************** -->
+
+</head>
+
+<body class="hold-transition skin-red hidden">
+
+	<div class="wrapper">
+
+		<!-- CABEÇALHO -->
+		<header id="main-header" class="main-header hidden">
+
+			<!-- LOGO -->
+			<a class="logo">
+				<span class="logo-mini">
+					<img class="logoHeader" src="static/assets/img/icone.png" alt="Restaurant" />
+				</span>
+				<span class="logo-lg">
+					<img class="logoHeader" src="static/assets/img/icone.png" alt="Restaurant" /> Restaurant
+				</span>
+			</a>
+
+			<!-- NAVBAR -->
+			<nav class="navbar navbar-static-top" role="navigation">
+
+				<a class="sidebar-toggle" data-toggle="push-menu" role="button">
+					<span class="sr-only">Toggle navigation</span>
+				</a>
+
+				<div class="navbar-custom-menu">
+					
+					<ul class="nav navbar-nav">
+					
+						<li class="dropdown user user-menu">
+						
+							<!-- USUARIO -->
+							<a id="userNameHeader" class="dropdown-toggle" data-toggle="dropdown">
+							</a>
+							
+							<!-- MENU USUARIO -->
+							<ul class="dropdown-menu">
+								
+								<li id="userNameTypeDropdown" class="user-header">
+								</li>
+								
+								<li class="user-footer">
+									<div class="pull-left">
+										<a href="#/perfil" class="btn btn-default btn-flat">
+											<i class="fa fa-user"></i> Perfil
+										</a>
+									</div>
+									<div class="pull-right">
+										<a href="#/logout" class="btn btn-default btn-flat">
+											<i class="fa fa-sign-out"></i> Sair
+										</a>
+									</div>
+								</li>
+							</ul>
+							
+						</li>
+						
+						<!-- MENU CONFIGURAÇÕES -->
+						<li>
+							<a data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+						</li>
+
+					</ul>
+					
+				</div>
+			</nav>
+		</header>
+
+		<!-- MENU LATERAL -->
+		<aside id="main-sidebar" class="main-sidebar hidden">
+
+			<section class="sidebar">
+				
+				<!-- COMPONENTES -->
+				<ul id="componentes" class="sidebar-menu" data-widget="tree">
+				
+					<li class="header text-center">COMPONENTES</li>
+
+				</ul>
+
+			</section>
+		</aside>
+
+		<!-- CONTEUDO PRINCIPAL -->
+		<div class="content-wrapper">
+
+			<section class="content container-fluid">
+
+				<div ng-view></div>
+
+			</section>
+		</div>
+
+		<!-- RODAPÉ -->
+		<footer id="main-footer" class="main-footer hidden">
+			<div class="pull-right hidden-xs">Versão {{appVersion}}</div>
+			<strong>Copyright &copy; {{year | date:'yyyy'}} Restaurant.</strong> Todos os direitos reservados.
+		</footer>
+
+		<!-- MENU CONFIGURAÇÕES -->
+		<aside class="control-sidebar control-sidebar-dark">
+		
+			<ul class="sidebar-menu" data-widget="tree">				
+				<li class="header text-center">CONFIGURAÇÕES</li>
+			</ul>
+
+		    <div class="tab-content">
+		      <div class="tab-pane active text-center" id="control-sidebar-settings-tab"></div>
+		    </div>
+
+		</aside>
+
+		<!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+
+	</div>
+
+</body>
+</html>

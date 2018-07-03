@@ -1,0 +1,50 @@
+<section class="limite">
+
+	<div class="container-login">
+	
+		<div class="wrap-login">
+
+			<div class="login-title">
+				<span class="login-title-text">Login</span>
+			</div>
+	
+			<form id="FrmLogin" name="Form" class="login-form">
+			
+				<fieldset ng-disabled="oLogin.form.disabled">
+			
+					<div class="form-group">
+                    	<div class="input-group">
+                        	<label class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></label>
+                            <input class="form-control" type="text" name="Usuario" placeholder="Usuário" 
+                            		maxlength="20" ng-model="oLogin.form.this.username" required/>
+                        </div>
+                    </div>
+		
+					<div class="form-group ">
+                        <div class="input-group">
+                            <label class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></label>
+                            <input class="form-control" type="password" name="Senha" placeholder="Senha"
+                            		minlength="6" maxlength="20" ng-model="oLogin.form.this.password" required/>
+                            <label class="input-group-addon">
+                            	<i ng-class="oLogin.form.viewPass.icon" ng-click="oLogin.form.viewPass.click()" aria-hidden="true"></i>
+                            </label>
+                        </div>
+                    </div>
+		
+					<div class="container-login-form-btn">
+						<button ng-disabled="Form.$invalid" class="btn btn-lg login-form-btn">
+							<i ng-class="oLogin.form.btn.this.icon" aria-hidden="true"></i>
+							<span ng-bind="oLogin.form.btn.this.text"></span>
+						</button>
+					</div>
+				
+				</fieldset>
+				
+			</form>
+		
+		</div>
+
+	</div>
+
+
+</section>
