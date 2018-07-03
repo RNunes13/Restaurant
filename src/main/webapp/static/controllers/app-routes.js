@@ -17,6 +17,10 @@
 				templateUrl: 'static/views/logout_view.html',
 				controller: 'LogoutController'
 			})
+			.when('/perfil', {
+				templateUrl: 'static/views/perfil_usuario_view.html',
+				controller: 'PerfilUsuarioController'
+			})
 			.otherwise({
 				templateUrl: 'static/views/notfound_view.html',
 				controller: 'NotFoundController',
