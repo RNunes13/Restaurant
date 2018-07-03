@@ -36,6 +36,11 @@ angular.module('Restaurant')
 						oUser.this = angular.copy(oUser.data);
 						oUser.this.createdAt = appService.dateTimeLocal(oUser.this.createdAt);
 						oUser.this.updatedAt = appService.dateTimeLocal(oUser.this.updatedAt);
+						
+						oUser.checkUsername.isExist = false;
+						oUser.checkUsername.invalid = false;
+						oUser.checkEmail.isExist = false;
+						
 						$scope.Form.$setPristine();
 						
 					}
@@ -133,6 +138,75 @@ angular.module('Restaurant')
 					}
 				}			
 			}
+			
+		},
+		
+		checkUsername: {
+			
+			invalid: false,
+			isExist: false,
+			isAvailable: () => {
+				
+				let oUser = $scope.oPerfilUsuario;	
+				if(!oUser.this.username) return false;
+				
+				//Expressão que captura caracteres que não são do grupo . a-z A-Z 0-9
+				let regex = /(?![\.a-zA-Z0-9]+)./g;
+				
+				let bTestRegex = regex.test(oUser.this.username);
+				
+				if (bTestRegex) {
+					
+					oUser.checkUsername.invalid = true;
+					$scope.Form.$invalid = true;
+					return false;
+					
+				} else {
+					oUser.checkUsername.invalid = false;
+				}
+				
+				GlobalService.usuario.checkUsername(oUser.this.username)
+				.then(function(response) {
+					
+					if (response && response.username !== oUser.data.username) {
+						$scope.Form.$invalid = true;
+						oUser.checkUsername.isExist = true;	
+					} else {
+						oUser.checkUsername.isExist = false;
+					}
+					
+				}, function(error) {
+					appService.notifIt.alert("warning", "Falha com o serviço ao verificar disponibilidade do login");
+				});
+				
+			}
+			
+		},
+		
+		checkEmail: {
+			
+			isExist: false,
+			isAvailable: () => {
+				
+				let oUser = $scope.oPerfilUsuario;	
+				if(!oUser.this.email) return false;
+				
+				GlobalService.usuario.checkEmail(oUser.this.email)
+				.then(function(response) {
+					
+					if (response && response.email !== oUser.data.email) {
+						$scope.Form.$invalid = true;
+						oUser.checkEmail.isExist = true;
+					} else {
+						oUser.checkEmail.isExist = false;
+					}
+					
+				}, function(error) {
+					appService.notifIt.alert("warning", "Falha com o serviço ao verificar disponibilidade do e-mail");
+				});
+				
+			}
+			
 		}
 
 	};

@@ -49,16 +49,26 @@
 
             <div class="col-sm-6">
               <div class="form-group check-input">
-                <label>Email</label>        
-                <input class="form-control" type="email" name="email" ng-model="oPerfilUsuario.this.email" placeholder="E-mail" required/>
+                <label>E-mail</label>        
+                <input class="form-control" type="email" name="email" placeholder="E-mail" required
+                	   ng-model="oPerfilUsuario.this.email"
+                	   ng-blur="oPerfilUsuario.checkEmail.isAvailable()"/>
+                
                 <div class="error" ng-show="Form.email.$error.required">
                   <i class="fa fa-exclamation-circle"></i>
                   <div>E-mail é obrigatório</div>
                 </div>
+                
                 <div class="attention" ng-show="Form.email.$error.email">
                   <i class="fa fa-exclamation-triangle"></i>
                   <div>E-mail inválido</div>
+                </div>                
+                
+                <div class="attention" ng-show="oPerfilUsuario.checkEmail.isExist">
+                  <i class="fa fa-exclamation-triangle"></i>
+                  <div>E-mail já cadastrado </div>
                 </div>
+                
               </div>
             </div>
 
@@ -69,11 +79,25 @@
             <div class="col-sm-6">
               <div class="form-group check-input">
                 <label>Login</label>        
-                <input class="form-control" type="text" name="login" maxlength="20" ng-model="oPerfilUsuario.this.username" placeholder="Login" required/>
+                <input class="form-control" type="text" name="login" maxlength="20" placeholder="Login" required
+                	   ng-model="oPerfilUsuario.this.username"
+                	   ng-blur="oPerfilUsuario.checkUsername.isAvailable()"/>
+                
                 <div class="error" ng-show="Form.login.$error.required">
                   <i class="fa fa-exclamation-circle"></i>
                   <div>Login é obrigatório</div>
                 </div>
+                
+                <div class="error" ng-show="oPerfilUsuario.checkUsername.invalid">
+                  <i class="fa fa-exclamation-circle"></i>
+                  <div>Login deve ter apenas caracteres alfanuméricos e ponto</div>
+                </div>
+                
+                <div class="attention" ng-show="oPerfilUsuario.checkUsername.isExist">
+                  <i class="fa fa-exclamation-triangle"></i>
+                  <div>Login já existe</div>
+                </div>
+                
               </div>
             </div>
 
