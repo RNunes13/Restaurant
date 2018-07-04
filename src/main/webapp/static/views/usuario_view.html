@@ -186,6 +186,7 @@
 								<div class="form-group check-input">
 									<label>E-mail <span class="obg"></span></label>
 									<input ng-model="oUsers.this.email"
+										   ng-blur="oUsers.checkEmail.isAvailable()"
 										   type="email"
 										   name="email"
 										   class="form-control"
@@ -203,6 +204,11 @@
 										<div>E-mail inválido</div>
 									</div>
 									
+									<div class="attention" ng-show="oUsers.checkEmail.isExist">
+						                <i class="fa fa-exclamation-triangle"></i>
+						                <div>E-mail já cadastrado </div>
+					                </div>
+									
 								</div>
 								
 							</div>
@@ -216,6 +222,7 @@
 								<div class="form-group check-input">
 									<label>Login <span class="obg"></span></label>
 									<input ng-model="oUsers.this.username"
+										   ng-blur="oUsers.checkUsername.isAvailable()"
 										   type="text"
 										   class="form-control"
 										   name="username"
@@ -226,6 +233,16 @@
 										<i class="fa fa-exclamation-circle"></i>
 										<div>Login é obrigatório</div>
 									</div>
+									
+									<div class="error" ng-show="oUsers.checkUsername.invalid">
+					                	<i class="fa fa-exclamation-circle"></i>
+					                	<div>Login deve ter apenas caracteres alfanuméricos e ponto</div>
+					                </div>
+					                
+					                <div class="attention" ng-show="oUsers.checkUsername.isExist">
+					                	<i class="fa fa-exclamation-triangle"></i>
+					                	<div>Login já existe</div>
+					                </div>
 									
 								</div>
 								
@@ -274,9 +291,17 @@
 									<span ng-bind="oUsers.form.btn.restore.name"></span> 
 								</button>
 							
-								<button	ng-class="Form.$invalid ? 'btn btn-danger' : oUsers.form.btn.this.class"
-										ng-disabled="Form.$invalid ? true : oUsers.form.btn.this.disabled"
-										ng-click="oUsers.form.btn.save.click()">
+								<button	ng-click="oUsers.form.btn.save.click()"								
+										ng-class="Form.$invalid ? 'btn btn-danger' :
+												 oUsers.checkUsername.isExist ? 'btn btn-danger' :
+												 oUsers.checkUsername.invalid ? 'btn btn-danger' :
+												 oUsers.checkEmail.isExist ? 'btn btn-danger' : 
+												 oUsers.form.btn.this.class"												 
+										ng-disabled="Form.$invalid ? true : 
+													oUsers.checkUsername.isExist ? true :
+													oUsers.checkUsername.invalid ? true :
+													oUsers.checkEmail.isExist ? true :
+													oUsers.form.btn.this.disabled">
 										
 									<i ng-class="oUsers.form.btn.this.icon"></i>
 									<span ng-bind="oUsers.form.btn.this.name"></span>

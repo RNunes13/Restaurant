@@ -158,6 +158,7 @@ angular.module('Restaurant')
 				if (bTestRegex) {
 					
 					oUser.checkUsername.invalid = true;
+					oUser.checkUsername.isExist = false;
 					$scope.Form.$invalid = true;
 					return false;
 					
