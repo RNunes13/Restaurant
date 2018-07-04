@@ -225,7 +225,133 @@ angular.module('Restaurant')
 			let nHeightWindow = window.innerHeight;
 			$('.content-wrapper').css("min-height", nHeightWindow - 51);
 			
-		}
+		},
+		
+		dataTableDisplyLength: function(instance, step){
+			
+			if(instance.id){
+				instance.DataTable.page.len(step).draw();
+			}
+
+			return instance;
+			
+		},
+
+		dataTableSearch: function(instance, sSearch, nColumn) {
+
+			if(instance.id){
+
+        		//Preenchendo todos os dados para a busca
+        		instance.DataTable.search('').columns().search('');
+
+        		if(nColumn >= 0){
+        			instance.DataTable.column(nColumn).search(sSearch).draw();
+        		}else{
+        			instance.DataTable.search(sSearch).draw();
+        		}
+
+        	}
+
+        	return instance;
+
+        },
+
+        dataTableLoad: function(instance, data) {
+
+        	if(instance.id){
+
+        		instance.DataTable.clear().rows.add(data).draw();
+
+        	}
+
+        	return instance;
+
+        },
+        
+        dataTableRowCallback: function(trigger, controls = false, selectable = true){
+
+        	return	function(Node,Obj,Index) {
+
+        		if(controls){
+
+        			$('td > .btn-delete', Node).unbind('click');
+        			$('td > .btn-delete', Node).bind('click', function() {
+
+        				$(Node).addClass("delete");
+        				$(document).trigger("dt."+trigger+".row.delete",Obj);
+
+        			});
+
+        			$('td > .btn-download', Node).unbind('click');
+        			$('td > .btn-download', Node).bind('click', function() {
+
+        				$(document).trigger("dt."+trigger+".row.download",Obj);
+
+        			});
+
+        			$('td > .btn-edit', Node).unbind('click');
+        			$('td > .btn-edit', Node).bind('click', function() {
+
+        				$(Node).addClass("edit");
+        				$(document).trigger("dt."+trigger+".row.edit",Obj);
+
+        			});
+
+        			if(selectable){
+
+        				$('td', Node).unbind('click');
+        				$('td', Node).bind('click', function() {
+
+        					$(Node).toggleClass('sel selected');
+
+        					let count = $(Node).parent().find("tr.sel").length;
+
+        					$(document).trigger("dt."+trigger+".row.click",count);
+
+        				});
+
+        			}
+
+
+        		}else{
+
+        			$(Node).unbind('click');
+        			$(Node).bind('click', function() {
+
+        				$(Node).parent().find("tr").not(Node).removeClass("sel selected")
+        				$(Node).toggleClass('sel selected');
+
+        				let count = $(Node).parent().find("tr.sel").length;
+        				let param = "";
+
+        				if(count){
+        					param = Obj;
+        				}
+
+        				$(document).trigger("dt."+trigger+".row.click",param);
+
+        			});
+
+        			if(selectable){
+
+        				$(Node).unbind('dblclick');
+        				$(Node).bind('dblclick', function() {
+
+        					$(Node).parent().find("tr").not(Node).removeClass("sel selected")
+        					$(Node).addClass('sel selected');
+
+        					$(document).trigger("dt."+trigger+".row.dblclick",Obj);
+
+        				});
+
+        			}
+
+        		}
+
+        		return Node;
+        	}
+        
+        }
 		
 	}
 	

@@ -10,8 +10,8 @@
 			
 			<div class="col-xs-3 button">
 				<button class="btn btn-black"
-						ng-click="oHeader.menu.fnPesquisa()"
-						ng-class="oHeader.menu.selected == 1 ? colorSkin.class.btn : ''"
+						ng-click="oHeader.menu.fnRetrieve()"
+						ng-class="{active : oHeader.menu.selected == 1}"
 						ng-disabled="oHeader.menu.selected == 1 ? true : false">
 					<i class="fa fa-search"></i>
 				</button>
@@ -25,8 +25,8 @@
 
 			<div class="col-xs-3 button">
 				<button class="btn btn-black"
-						ng-click="oHeader.menu.fnCadastro()"
-						ng-class="oHeader.menu.selected == 2 ? colorSkin.class.btn : ''"
+						ng-click="oHeader.menu.fnCreate()"
+						ng-class="{active : oHeader.menu.selected == 2}"
 						ng-disabled="oHeader.menu.selected == 2 ? true : false">
 					<i class="fa fa-floppy-o"></i>
 				</button>
@@ -40,9 +40,9 @@
 
 			<div class="col-xs-3 button">
 				<button class="btn btn-black"
-						ng-click="oHeader.menu.fnEdicao()"
-						ng-disabled="!oHeader.selected == true ? true : oHeader.menu.selected == 3 ? true : false"
-						ng-class="oHeader.menu.selected == 3 ? colorSkin.class.btn : ''">
+						ng-click="oHeader.menu.fnUpdate()"
+						ng-class="{active : oHeader.menu.selected == 3}"
+						ng-disabled="!oHeader.selected == true ? true : oHeader.menu.selected == 3 ? true : false">
 					<i class="fa fa-pencil"></i>
 				</button>
 				<div class="info hidden-xs">
@@ -55,7 +55,7 @@
 
 			<div class="col-xs-3 button">
 				<button class="btn btn-black"
-						ng-click="oHeader.menu.fnExclusao()"
+						ng-click="oHeader.menu.fnDelete()"
 						ng-disabled="!oHeader.selected">
 					<i class="fa fa-trash"></i>
 				</button>
