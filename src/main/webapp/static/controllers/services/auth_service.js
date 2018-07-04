@@ -16,6 +16,7 @@ angular.module('Restaurant').factory('authService', ['appService', '$sessionStor
 				} else {
 
 					appService.load();
+					appService.infoUserHeader();
 					appService.alterMenuActive();
 					return true;
 					

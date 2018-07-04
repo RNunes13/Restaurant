@@ -46,6 +46,14 @@ angular.module('Restaurant').factory('GlobalService', function(app, $http, $q) {
 				return app.submit('GET', '/user/' + id);
 			},
 			
+			checkUsername: function(username) {
+				return app.submit('GET', '/user/checkUsername/' + username);
+			},
+			
+			checkEmail: function(email) {
+				return app.submit('POST', '/user/checkEmail/', email);
+			},
+			
 			post: function(oData) {
 				return app.submit('POST', '/user/', oData);
 			},

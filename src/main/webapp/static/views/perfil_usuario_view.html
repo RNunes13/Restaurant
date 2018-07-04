@@ -1,0 +1,175 @@
+<section>
+
+  <div class="box">
+
+    <div class="box-header with-border">
+
+      <div class="row">
+
+        <div class="col-sm-12">
+
+          <h2>Meu Perfil</h2>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+    <div class="box-body" style="">
+
+      <form id="frmPerfilUsuario" name="Form" class="frm">
+
+        <fieldset ng-disabled="oPerfilUsuario.form.disabled">
+
+          <div class="row">
+
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>Código</label>
+                <input class="form-control" type="text" name="codigo" ng-model="oPerfilUsuario.this.id" readonly />
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-sm-6">                
+              <div class="form-group check-input">
+                <label>Nome</label>        
+                <input class="form-control" type="text" name="nome" ng-model="oPerfilUsuario.this.name" placeholder="Nome" required/>
+                <div class="error" ng-show="Form.nome.$error.required">
+                  <i class="fa fa-exclamation-circle"></i>
+                  <div>Nome é obrigatório</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group check-input">
+                <label>E-mail</label>        
+                <input class="form-control" type="email" name="email" placeholder="E-mail" required
+                	   ng-model="oPerfilUsuario.this.email"
+                	   ng-blur="oPerfilUsuario.checkEmail.isAvailable()"/>
+                
+                <div class="error" ng-show="Form.email.$error.required">
+                  <i class="fa fa-exclamation-circle"></i>
+                  <div>E-mail é obrigatório</div>
+                </div>
+                
+                <div class="attention" ng-show="Form.email.$error.email">
+                  <i class="fa fa-exclamation-triangle"></i>
+                  <div>E-mail inválido</div>
+                </div>                
+                
+                <div class="attention" ng-show="oPerfilUsuario.checkEmail.isExist">
+                  <i class="fa fa-exclamation-triangle"></i>
+                  <div>E-mail já cadastrado </div>
+                </div>
+                
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div class="form-group check-input">
+                <label>Login</label>        
+                <input class="form-control" type="text" name="login" maxlength="20" placeholder="Login" required
+                	   ng-model="oPerfilUsuario.this.username"
+                	   ng-blur="oPerfilUsuario.checkUsername.isAvailable()"/>
+                
+                <div class="error" ng-show="Form.login.$error.required">
+                  <i class="fa fa-exclamation-circle"></i>
+                  <div>Login é obrigatório</div>
+                </div>
+                
+                <div class="error" ng-show="oPerfilUsuario.checkUsername.invalid">
+                  <i class="fa fa-exclamation-circle"></i>
+                  <div>Login deve ter apenas caracteres alfanuméricos e ponto</div>
+                </div>
+                
+                <div class="attention" ng-show="oPerfilUsuario.checkUsername.isExist">
+                  <i class="fa fa-exclamation-triangle"></i>
+                  <div>Login já existe</div>
+                </div>
+                
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+
+              <div class="form-group check-input">
+
+                <label>Senha</label>
+                <div class="input-group">
+                  <input class="form-control" type="password" name="senha" placeholder="Senha"
+                  minlength="6" maxlength="20" ng-model="oPerfilUsuario.this.password" required/>
+                  <label class="input-group-addon">
+                    <i ng-class="oPerfilUsuario.form.viewPass.icon" ng-click="oPerfilUsuario.form.viewPass.click()" aria-hidden="true"></i>
+                  </label>
+                </div>
+
+                <div class="error-password" ng-show="Form.senha.$error.required">
+                  <i class="fa fa-exclamation-circle"></i>
+                  <div>Senha é obrigatória</div>
+                </div>
+                <div class="attention-password" ng-show="Form.senha.$error.minlength">
+                  <i class="fa fa-exclamation-triangle"></i>
+                  <div>Tamanho mínimo de 6 caracteres</div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-sm-6">
+              <label>Data Cadastro</label>
+              <input class="form-control" type="datetime-local" name="dataCadastro" ng-model="oPerfilUsuario.this.createdAt" readonly />
+            </div>
+
+            <div class="col-sm-6">
+              <label>Data Atualizado</label>
+              <input class="form-control" type="datetime-local" name="dataAtualizado" ng-model="oPerfilUsuario.this.updatedAt" readonly />
+            </div>
+
+          </div>
+
+        </fieldset>
+
+      </form>
+
+    </div>
+
+    <div class="box-footer">
+      
+      <div class="pull-right">
+        <button type="button" 
+                ng-class="oPerfilUsuario.form.btn.restabelecer.class"
+                ng-click="oPerfilUsuario.form.btn.restabelecer.click()">
+          <i ng-class="oPerfilUsuario.form.btn.restabelecer.icon"></i>
+          <span ng-bind="oPerfilUsuario.form.btn.restabelecer.text"></span>
+        </button>
+
+        <button type="button" 
+                ng-class="Form.$invalid ? 'btn btn-danger' : oPerfilUsuario.form.btn.this.class"
+                ng-click="oPerfilUsuario.form.btn.this.click()"
+                ng-disabled="Form.$invalid ? true : oPerfilUsuario.form.btn.this.disabled">
+          <i ng-class="oPerfilUsuario.form.btn.this.icon"></i>
+          <span ng-bind="oPerfilUsuario.form.btn.this.text"></span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>

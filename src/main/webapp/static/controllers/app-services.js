@@ -1,5 +1,5 @@
 angular.module('Restaurant')
-.service('appService',['$uibModal', '$sessionStorage', function($modal, $session){
+.service('appService',['$uibModal', '$sessionStorage', '$filter', function($modal, $session, $filter){
 	
 	let that = this;
 	
@@ -42,7 +42,31 @@ angular.module('Restaurant')
 					});
 				}
 				
+			}			
+        	
+			/* Exibindo o layout */
+			$('#main-header').removeClass("hidden").fadeIn("slow");
+			$('#main-sidebar').removeClass("hidden").fadeIn("slow");
+			$('#main-footer').removeClass("hidden").fadeIn("slow");
+			$('body').addClass("fixed").fadeIn("slow");
+			$('body').addClass("sidebar-mini");
+			
+			if (window.innerWidth >= 768) {
+				
+				$('.content-wrapper').css("margin-left", "230px");
+				$('.content-wrapper').css("min-height", window.innerHeight - 51);
+				
+			} else if (window.innerWidth > 412 && window.innerWidth < 768) {
+
+				$('.content-wrapper').css("min-height", window.innerHeight - 51);
+				
+			} else {
+				$('.content-wrapper').css("min-height", window.innerHeight - 75);
 			}
+			
+		},
+		
+		infoUserHeader: () => {
 			
 			/* Carregando dados usuário */
 			let oDataUser = $session.restaurant.usuario;
@@ -91,27 +115,6 @@ angular.module('Restaurant')
 
         	eNameUserTypeDropdow.appendChild(eImgDropdown);
         	eNameUserTypeDropdow.appendChild(eNameType);
-        	
-			/* Exibindo o layout */
-			$('#main-header').removeClass("hidden").fadeIn("slow");
-			$('#main-sidebar').removeClass("hidden").fadeIn("slow");
-			$('#main-footer').removeClass("hidden").fadeIn("slow");
-			$('body').addClass("fixed").fadeIn("slow");
-			$('body').addClass("sidebar-mini");
-			
-			if (window.innerWidth >= 768) {
-				
-				$('.content-wrapper').css("margin-left", "230px");
-				$('.content-wrapper').css("min-height", window.innerHeight - 51);
-				
-			} else if (window.innerWidth > 412 && window.innerWidth < 768) {
-
-				$('.content-wrapper').css("min-height", window.innerHeight - 51);
-				
-			} else {
-				$('.content-wrapper').css("min-height", window.innerHeight - 75);
-			}
-			
 		},
 		
 		alterMenuActive: () => {
@@ -141,6 +144,22 @@ angular.module('Restaurant')
 
 			}
 			
+		},
+		
+		dateTimeLocal: nMilliseconds => {
+			
+			let sDate;
+			
+			if(nMilliseconds){
+
+				let oDate = new Date(nMilliseconds);
+				let fDate = $filter('date')(oDate,'yyyy-MM-dd HH:mm:ss');
+				
+				sDate = new Date(fDate);
+
+			}
+			
+			return sDate;
 		},
 				
 		modal: function(o = required('Object parameter')) {
