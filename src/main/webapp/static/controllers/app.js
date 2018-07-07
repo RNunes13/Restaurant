@@ -3,7 +3,7 @@
 	angular.module('Restaurant', ['ngRoute', 'ui.bootstrap', 'ngStorage', 'datatables'])
 	.service('app', ['$q', '$http', function($q, $http) {
 		
-    	this.sIP = '177.149.49.97';
+    	this.sIP = '179.54.251.112';
     	this.sPort = '8081';
     	this.sPath = 'restaurant_back';
     	this.sAuthentication = 'Basic ' + btoa('rnunes:@1q2w3e4r');
@@ -35,7 +35,7 @@
 		DTDefaultOptions.setDOM('ipt');
 	
 		$rootScope.year = new Date();
-		$rootScope.appVersion = '0.2.2';		
+		$rootScope.appVersion = '0.2.3';		
 	
 	}]);
 })();

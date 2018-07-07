@@ -12,9 +12,9 @@ angular.module('Restaurant')
 		load: () => {
 			
 			/* Carregando os componentes */
-			let oComponentes = $session.restaurant.componentes;				
+			let oComponentes = $session.restaurant.componentes;
 			let eComponentes = document.querySelector("#componentes");
-			let bLoaded =  $('#componentes > li').not('.header').length ? true : false;
+			let bLoaded =  $('#componentes > li').not('.header').not('.homepage').not('.my-profile').length ? true : false;
 				
 			if (!bLoaded) {
 				
@@ -25,10 +25,6 @@ angular.module('Restaurant')
 						let eLink = document.createElement("a");
 						let eIcon = document.createElement("i");
 						let eDescricao = document.createElement("span");
-
-						if (componente.url == "#/home") {
-							eLinha.className = "active";
-						}
 
 						eIcon.className = componente.icon;
 						eDescricao.innerText = componente.name; 
@@ -127,7 +123,7 @@ angular.module('Restaurant')
 			let eComponentes = document.querySelector("#componentes");
 			
 			let eComponentAccess = eComponentes.querySelector("li a[href='"+sHash+"']");
-			let eComponentActive = $("li[class='active']");
+			let eComponentActive = $("li[class~='active']");
 			
 			if (sHash == "#/404") {
 				
@@ -143,6 +139,15 @@ angular.module('Restaurant')
 				eComponentAccess.parentElement.classList.add('active');
 
 			}
+			
+		},
+		
+		fixNavTabActive: () => {
+			
+			$('.nav-tabs > li').removeClass('active');
+			$('.nav-tabs > li:first-child').addClass('active');
+			$('.tab-content > div').removeClass('active in');
+			$('.tab-content > div:first-child').addClass('active in');
 			
 		},
 		
@@ -268,45 +273,38 @@ angular.module('Restaurant')
 
         },
         
-        dataTableRowCallback: function(trigger, controls = false, selectable = true){
+        dataTableRowCallback: (trigger, controls = false, selectable = true) => {
 
-        	return	function(Node,Obj,Index) {
+        	return	(Node, Obj, Index) => {
 
         		if(controls){
 
         			$('td > .btn-delete', Node).unbind('click');
-        			$('td > .btn-delete', Node).bind('click', function() {
+        			$('td > .btn-delete', Node).bind('click', () => {
 
         				$(Node).addClass("delete");
-        				$(document).trigger("dt."+trigger+".row.delete",Obj);
-
-        			});
-
-        			$('td > .btn-download', Node).unbind('click');
-        			$('td > .btn-download', Node).bind('click', function() {
-
-        				$(document).trigger("dt."+trigger+".row.download",Obj);
-
-        			});
-
-        			$('td > .btn-edit', Node).unbind('click');
-        			$('td > .btn-edit', Node).bind('click', function() {
-
-        				$(Node).addClass("edit");
-        				$(document).trigger("dt."+trigger+".row.edit",Obj);
+        				$(document).trigger("dt."+trigger+".row.delete", Obj);
 
         			});
 
         			if(selectable){
 
         				$('td', Node).unbind('click');
-        				$('td', Node).bind('click', function() {
+        				$('td', Node).bind('click', () => {
 
         					$(Node).toggleClass('sel selected');
 
         					let count = $(Node).parent().find("tr.sel").length;
+        					let param = new Object();
+        					
+            				let bSelected = $(Node).hasClass("sel");
 
-        					$(document).trigger("dt."+trigger+".row.click",count);
+            				param = {
+								object: Obj,
+								selected: bSelected
+							}
+
+        					$(document).trigger("dt."+trigger+".row.click", param);
 
         				});
 
@@ -316,7 +314,7 @@ angular.module('Restaurant')
         		}else{
 
         			$(Node).unbind('click');
-        			$(Node).bind('click', function() {
+        			$(Node).bind('click', () => {
 
         				$(Node).parent().find("tr").not(Node).removeClass("sel selected")
         				$(Node).toggleClass('sel selected');
@@ -328,14 +326,14 @@ angular.module('Restaurant')
         					param = Obj;
         				}
 
-        				$(document).trigger("dt."+trigger+".row.click",param);
+        				$(document).trigger("dt."+trigger+".row.click", param);
 
         			});
 
         			if(selectable){
 
         				$(Node).unbind('dblclick');
-        				$(Node).bind('dblclick', function() {
+        				$(Node).bind('dblclick', () => {
 
         					$(Node).parent().find("tr").not(Node).removeClass("sel selected")
         					$(Node).addClass('sel selected');

@@ -1,7 +1,7 @@
 'use strict';
 angular.module('Restaurant')
-.controller('UsuarioController', ['$scope', 'authService', 'appService', 'GlobalService', 'DTOptionsBuilder', '$filter', '$sessionStorage',
-	function($scope, authService, appService, GlobalService, DTOptionsBuilder, $filter, $session) {
+.controller('UsuarioController', ['$scope', 'authService', 'appService', 'GlobalService', 'DTOptionsBuilder', '$filter', '$sessionStorage', '$uibModal',
+	function($scope, authService, appService, GlobalService, DTOptionsBuilder, $filter, $session, $modal) {
 
 		let logged = authService.login.check();
 		
@@ -31,18 +31,26 @@ angular.module('Restaurant')
 					$scope.oUsers.form.disabled = false;
 					$scope.oUsers.form.btn.this = angular.copy($scope.oUsers.form.btn.save);
 					$scope.Form.$setPristine();
+					appService.fixNavTabActive();
 					this.selected = 2;
 				},
 				fnUpdate: function() {
 
 					let main = $scope.oUsers;
-					this.selected = 3;
+					
+						main.form.disabled = false;
+						main.this = angular.copy($scope.oHeader.selected);
+						main.form.btn.this = angular.copy(main.form.btn.saved);
+						main.this.createdAt = appService.dateTimeLocal(main.this.createdAt);
+						main.this.updatedAt = appService.dateTimeLocal(main.this.updatedAt);
 
-					main.form.disabled = false;
-					main.this = angular.copy($scope.oHeader.selected);
-					main.form.btn.this = angular.copy(main.form.btn.saved);
-					main.this.createdAt = appService.dateTimeLocal(main.this.createdAt);
-					main.this.updatedAt = appService.dateTimeLocal(main.this.updatedAt);
+					appService.fixNavTabActive();
+					$scope.oComponentes.selected = '';
+					$scope.oLibComponentes.aData = [];
+					
+					$scope.oLibComponentes.get();
+					
+					this.selected = 3;
 
 				},
 				fnDelete: function() {
@@ -536,4 +544,259 @@ angular.module('Restaurant')
 
 		},true);
 
+		
+		
+		$scope.oLibComponentes = {			
+			aData: [],
+			aCopy: [],
+			selected: '',
+			aPermission: [
+				{value: 1, bind: 'Con'},
+				{value: 2, bind: 'Con / Inc'},
+				{value: 3, bind: 'Con / Inc / Alt'},
+				{value: 4, bind: 'Con / Inc / Alt / Exc'}
+			],
+			btn: {
+				delete: (obj) => {
+					
+					let oLib = $scope.oLibComponentes;
+						oLib.selected = obj;
+						
+					let bSaved = false;
+					
+					oLib.aCopy.forEach(liberacao => {
+						if(obj.id === liberacao.id) bSaved = true;
+					});
+					
+					if (bSaved) {
+						
+						let title = "<h4 style='color: #C03423;'><i class='fa fa-trash'></i> Excluir</h4>";
+						let text = "Deseja excluir a liberação do componente? <br/><br/>" +
+								   "<strong>Código:</strong> "+ obj.id + "<br/>" +
+								   "<strong>Nome:</strong> " + obj.name;
+					
+				
+						alertify.confirm(title,text,oLib.delete,null).set('labels', {ok:'SIM', cancel:'NÃO'});
+						
+					} else {
+						$scope.oLibComponentes.aData = $scope.oLibComponentes.aData.filter(component => {
+							return component.id != oLib.selected.id;
+						});
+					}
+										
+				},
+				save: () => {
+					
+					let oLib = $scope.oLibComponentes;	
+					let oUser = $scope.oUsers.this;
+					
+					let aCompIds = oLib.aCopy.map(component => {return component.id})
+					
+					let aNew = oLib.aData.filter(component => {
+						let i = aCompIds.indexOf(component.id);						
+						if (i === -1 || Number(oLib.aCopy[i].permission) !== Number(component.permission)) return component;
+					});
+					
+					
+					let aData = [];
+					
+					aNew.forEach(componente => {
+						
+						if (componente.permission) {
+							aData.push({
+								"componentPermissionCompl": {
+								      "component": {
+								        "id": componente.id
+								      },
+								      "user": {
+								        "id": oUser.id
+								      }
+								    },
+								    "permission": Number(componente.permission)
+							});
+						}
+						
+					});
+					
+					if (aData.length === 0) {
+						appService.notifIt.alert('warning', 'Não há liberação para salvar');
+						return false;
+					}
+					
+					$scope.oLibComponentes.post(aData);
+					
+				}
+			},
+			get: () => {
+				GlobalService.liberacaoComponente.getByUser($scope.oUsers.this.id)
+				.then(aData => {
+					
+					let aComponent = aData.map(liberacao => {
+						liberacao.componentPermissionCompl.component.permission = liberacao.permission;
+						return liberacao.componentPermissionCompl.component;
+					})
+					
+					$scope.oLibComponentes.aData = angular.copy(aComponent);
+					$scope.oLibComponentes.aCopy = angular.copy(aComponent);
+					
+				}, exception => {
+					console.error(exception);
+					appService.notifIt.alert('error', 'Falha ao consultar os componentes do usuário')
+				});
+			},
+			post: (aData) => {
+				
+				GlobalService.liberacaoComponente.postList(aData)
+				.then(() => {						
+
+					$scope.oLibComponentes.get();
+					appService.notifIt.alert('success', 'Liberações registradas com sucesso');
+					
+				}, exception => {
+					
+					console.error(exception);
+					appService.notifIt.alert('error', 'Falha ao registrar as liberações');
+					
+				});
+				
+			},
+			delete: () => {
+				
+				let oLib = $scope.oLibComponentes;
+				
+				GlobalService.liberacaoComponente.delete($scope.oUsers.this.id, oLib.selected.id)
+				.then(() => {
+					
+					appService.notifIt.alert('success', 'Liberação excluída com sucesso');
+					$scope.oLibComponentes.aData = $scope.oLibComponentes.aData.filter(component => {
+						return component.id != oLib.selected.id;
+					});
+					
+				}, exception => {
+					console.error(exception);
+					appService.notifIt.alert('error', 'Falha ao excluir a liberação');
+				});
+				
+			}
+		}
+		
+		
+		$scope.oComponentes = {
+			aData: [],
+			selected: '',
+			componentsNotAllowed: (aData) =>{	
+				let oLib = $scope.oLibComponentes.aData;			
+				let aCompIds = oLib.map(component => {return component.id})
+				
+				return aData.filter(component => {
+					if (aCompIds.indexOf(component.id) === -1) return component;
+				});
+				
+			},
+			modal: {
+				instance: '',
+				view: '',
+				size: 'lg',
+				bOpen: false,
+				open: () => {
+					
+					let oCom = $scope.oComponentes;
+					
+					oCom.modal.instance = $modal.open({
+						templateUrl: 'static/views/modals/componente_modal.html',
+						controller: 'ModalController',
+						//backdrop: 'static',
+						scope: $scope
+				    });
+					
+					oCom.modal.bOpen = true;
+					$scope.oComponentes.selected = '';
+					$scope.oComponentes.get();
+					
+				}
+			},
+			get: () => {
+				GlobalService.componente.get()
+				.then(function(aData){
+					
+					$scope.oComponentes.aData = angular.copy(aData);					
+					
+					let aCompNotAllowed = $scope.oComponentes.componentsNotAllowed(aData);
+					
+					$scope.oComponentes.table.options.data = aCompNotAllowed;
+					
+				},function(exception){
+					console.error(exception);
+					appService.notifIt.alert('error', 'Falha ao consultar os componentes')
+				});
+			},
+			table: {
+				id: "tblComponentes",
+				class: "table table-striped table-hover display responsive nowrap",			
+				loading: false,
+				instance: {}, 
+				disableDeepWatchers: true,
+				search: {
+					text: "",
+					column: -1,					
+					change: () => {
+						let oTable = $scope.oComponentes.table;
+						oTable.instance = appService.dataTableSearch(oTable.instance, oTable.search.text, oTable.search.column);
+					},
+					click: column => {
+						
+						let oTable = $scope.oComponentes.table;
+						
+						oTable.search.column = column;
+						oTable.search.change();						
+					}
+				},
+				columns: [
+					{
+						"data":"id",
+						"title":"Código",
+						"class":"text-center"
+					},
+					{
+						"data":"icon",
+						"title":"Ícone",
+						"class":"text-center",
+						"render": icon => {
+							return "<i class='" + icon + "'></i>";
+						}
+					},
+					{
+						"data":"name",
+						"title":"Nome",
+						"class":""
+					}
+				],
+				options: {
+					dom: "iptr",
+					data: "",
+					responsive: true,
+					order: [],
+					rowCallback: appService.dataTableRowCallback("componentes", true)
+				}
+			}
+		}
+		
+		angular.element(document)
+		.unbind("dt.componentes.row.click")
+		.bind("dt.componentes.row.click", function(e, o){
+			
+			let oCom = $scope.oLibComponentes.aData;
+			let Obj = angular.copy(o);
+			
+			let aComFiltered = oCom.filter(component => {
+				return component.id != Obj.object.id;
+			});
+			
+			if (Obj.selected) aComFiltered.push(Obj.object);
+			
+			$scope.oComponentes.selected = aComFiltered.length;			
+			$scope.oLibComponentes.aData = aComFiltered;
+
+		});
+		
 	}]);
