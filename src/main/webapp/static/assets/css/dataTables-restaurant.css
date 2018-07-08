@@ -77,15 +77,22 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before 
 }
 
 table.dataTable thead .sorting:after {
-	content: none !important;
+	content: "" !important;
 }
 
 table.dataTable thead .sorting_asc:after {
-	content: "\e253" !important;
+	/* content: "\e253" !important; */
+	content: "" !important;
 }
 
 table.dataTable thead .sorting_desc:after {
-	content: "\e252" !important;
+	/* content: "\e252" !important; */
+	content: "" !important;
+}
+
+table.dataTable thead th:not(.control)  {
+	padding: 1px 3px 3px 3px !important;
+	vertical-align: middle !important; 
 }
 
 .sel {
@@ -105,18 +112,6 @@ table.dataTable thead .sorting_desc:after {
 .fields-search-step .input-group label,
 .fields-search-step .input-group select {
 	border: none;
-}
-
-table.dataTable thead .sorting:after {
-    content: "" !important;
-}
-
-table.dataTable thead .sorting_asc:after {
-    content: "\e253" !important;
-}
-
-table.dataTable thead .sorting_desc:after {
-    content:"\e252" !important;
 }
 
 @media screen and (max-width: 620px) {

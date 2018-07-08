@@ -367,6 +367,7 @@ angular.module('Restaurant')
 				columns: [
 					{
 						"data":"",
+						"class": "control",
 						"orderable": false,
 						"render": function(){
 							return "";
@@ -786,12 +787,14 @@ angular.module('Restaurant')
 					{
 						"data":"id",
 						"title":"Código",
-						"class":"text-center"
+						"class":"text-center",
+						"width": "70px"
 					},
 					{
 						"data":"icon",
 						"title":"Ícone",
 						"class":"text-center",
+						"width": "70px",
 						"render": icon => {
 							return "<i class='" + icon + "'></i>";
 						}
