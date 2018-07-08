@@ -68,6 +68,7 @@ angular.module('Restaurant').controller('LoginController', ['$scope', 'GlobalSer
 								if (response) {
 									
 									response.forEach(liberacao => {
+										liberacao.componentPermissionCompl.component.permission = liberacao.permission;
 										componentes.push(liberacao.componentPermissionCompl.component);
 									});
 									

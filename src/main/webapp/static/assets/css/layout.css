@@ -5,13 +5,20 @@ body {
 	display: none;
 }
 
+.not-found { color: #C13422; }
+
 /* .content-wrapper { margin-left: 0 !important; } */
 
-.skin-red .main-header .logo { background-color: #C13422 !important; }
-.skin-red .main-header .navbar, .skin-red .main-header li.user-header { background-color: #DE4E3C !important; }
-.skin-red .sidebar-menu > li.active > a { border-left-color: #C13422 !important; }
+.main-header .logo { background-color: #C13422 !important; }
+.main-header .navbar, .skin-red .main-header li.user-header { background-color: #C74433 !important; }
+.skin-red .main-header .navbar .sidebar-toggle:hover { background-color: #C13422 !important; }
 
-.not-found { color: #C13422; }
+.sidebar-menu > li.active > a { border-left-color: #C13422 !important; }
+.sidebar-menu > li.header { color: #FFF !important; background: #313131 !important; }
+.wrapper, .main-sidebar, .left-side { background-color: #242424 !important; }
+.control-sidebar-dark, .control-sidebar-dark + .control-sidebar-bg { background-color: #242424 !important; }
+.sidebar a { color: #B8C7CE !important; }
+.sidebar-menu > li:hover > a, .sidebar-menu > li.active > a, .sidebar-menu > li.menu-open > a { color: #FFF !important; background: #444444 !important; }
 
 button {
 	outline: none;
@@ -58,8 +65,59 @@ a {
     transition: all 0.5s ease;
 }
 
+.nav-tabs > li > a{	
+	height: 30px;
+	padding: 4px 20px !important;
+	color: #C13422;
+}
+
+.nav-tabs > li.active > a {
+	font-weight: bold;
+}
+
+.row.row-just {
+    margin-left: -1px;
+    margin-right: -1px;
+} 
+
+.row.row-just > div{
+    padding-right: 1px;
+    padding-left: 1px;
+}
+
+.row-adjust > td {
+	padding: 3px 0 !important;
+}
+
+.row-adjust .col-icon > i { padding-left: 20px !important; line-height: 25px;}
+.row-adjust .col-name > span { padding-left: 10px !important; line-height: 25px;}
+.row-adjust .col-icon { width: 1px; }
+
+td > select.form-control {
+	width: auto;
+	height: 25px;
+	padding: 0 6px;
+	border: none;
+    border-bottom: 1px solid #e1e1e1;
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+.btn-delete {
+	font-size: 20px !important;
+    margin-right: 10px;
+    color: #C13422;
+    cursor: pointer;
+    line-height: 25px !important;
+}
+
 @media (max-width: 767px) {
 	.content-wrapper {
   		margin-left: 0 !important;
+	}
+	
+	.btn-delete {
+	    margin-right: 5px;
 	}
 }

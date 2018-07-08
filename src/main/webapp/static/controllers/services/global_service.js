@@ -4,33 +4,61 @@ angular.module('Restaurant').factory('GlobalService', function(app, $http, $q) {
 	
 	return {
 		
+		componente: {
+			
+			get: () => {
+				return app.submit('GET', '/component/getAll');
+			},
+			
+			getById: id => {
+				return app.submit('GET', '/component/' + id);
+			},
+			
+			post: oData => {
+				return app.submit('POST', '/component/', oData);
+			},
+			
+			postList: oData => {
+				return app.submit('POST', '/component/registerList/', oData);
+			},
+			
+			put: oData => {
+				return app.submit('PUT', '/component/', oData);
+			},
+			
+			delete: (id) => {
+				return app.submit('DELETE', '/component/' + id);
+			}
+			
+		},
+		
 		liberacaoComponente: {
 			
-			get: function() {
+			get: () => {
 				return app.submit('GET', '/componentPermission/getAll');
 			},
 			
-			getByUserComponent: function(id_user, id_component) {
+			getByUserComponent: (id_user, id_component) => {
 				return app.submit('GET', '/componentPermission/' + id_user + '/' + id_component);
 			},
 			
-			getByUser: function(id) {
+			getByUser: id => {
 				return app.submit('GET', '/componentPermission/' + id);
 			},
 			
-			post: function(oData) {
+			post: oData => {
 				return app.submit('POST', '/componentPermission/', oData);
 			},
 			
-			postList: function(oData) {
+			postList: oData => {
 				return app.submit('POST', '/componentPermission/registerList/', oData);
 			},
 			
-			put: function(oData) {
+			put: oData => {
 				return app.submit('PUT', '/componentPermission/', oData);
 			},
 			
-			delete: function(id_user, id_component) {
+			delete: (id_user, id_component) => {
 				return app.submit('DELETE', '/componentPermission/' + id_user + '/' + id_component);
 			}
 			
@@ -38,37 +66,37 @@ angular.module('Restaurant').factory('GlobalService', function(app, $http, $q) {
 		
 		usuario: {
 			
-			get: function() {
+			get: () => {
 				return app.submit('GET', '/user/getAll');
 			},
 			
-			getById: function(id) {
+			getById: id => {
 				return app.submit('GET', '/user/' + id);
 			},
 			
-			checkUsername: function(username) {
+			checkUsername: username => {
 				return app.submit('GET', '/user/checkUsername/' + username);
 			},
 			
-			checkEmail: function(email) {
+			checkEmail: email => {
 				return app.submit('POST', '/user/checkEmail/', email);
 			},
 			
-			post: function(oData) {
+			post: oData => {
 				return app.submit('POST', '/user/', oData);
 			},
 			
-			put: function(oData) {
+			put: oData => {
 				return app.submit('PUT', '/user/', oData);
 			},
 			
-			delete: function(id) {
+			delete: id => {
 				return app.submit('DELETE', '/user/' + id);
 			},
 			
 			login: {
 				
-				get: function(oData) {
+				get: oData => {
 					return app.submit('GET', '/user/login/' + oData.username + '/' + oData.password)
 				}
 				

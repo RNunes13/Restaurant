@@ -21,6 +21,10 @@
 				templateUrl: 'static/views/perfil_usuario_view.html',
 				controller: 'PerfilUsuarioController'
 			})
+			.when('/usuarios', {
+				templateUrl: 'static/views/usuario_view.html',
+				controller: 'UsuarioController'
+			})
 			.otherwise({
 				templateUrl: 'static/views/notfound_view.html',
 				controller: 'NotFoundController',

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-br" ng-app="Restaurant">
+<html lang="pt-br" ng-app="Restaurant"> 
 <head>
-	
+
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -83,8 +83,9 @@
 	<script src="static/controllers/controller/login_controller.js"></script>
 	<script src="static/controllers/controller/home_controller.js"></script>
 	<script src="static/controllers/controller/logout_controller.js"></script>
-	<!-- <script src="static/controllers/controller/usuario_controller.js"></script> -->
+	<script src="static/controllers/controller/usuario_controller.js"></script>
 	<script src="static/controllers/controller/perfil_usuario_controller.js"></script>
+	<script src="static/controllers/controller/modal_controller.js"></script>
 
 	<!-- Services Angular -->
 	<script src="static/controllers/services/global_service.js"></script>
@@ -136,7 +137,7 @@
 					<ul class="nav navbar-nav">
 					
 						<li class="dropdown user user-menu">
-						
+
 							<!-- USUARIO -->
 							<a id="userNameHeader" class="dropdown-toggle" data-toggle="dropdown">
 							</a>
@@ -183,6 +184,8 @@
 				<ul id="componentes" class="sidebar-menu" data-widget="tree">
 				
 					<li class="header text-center">COMPONENTES</li>
+					<li class="homepage active"><a href="#/home"><i class="fa fa-home"></i><span>Tela Inicial</span></a></li>
+					<li class="my-profile"><a href="#/perfil"><i class="fa fa-user"></i><span>Meu Perfil</span></a></li>
 
 				</ul>
 
