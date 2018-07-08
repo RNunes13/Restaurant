@@ -3,16 +3,16 @@ angular.module('Restaurant')
 .controller('UsuarioController', ['$scope', 'authService', 'appService', 'GlobalService', 'DTOptionsBuilder', '$filter', '$sessionStorage', '$uibModal',
 	function($scope, authService, appService, GlobalService, DTOptionsBuilder, $filter, $session, $modal) {
 
-		let logged = authService.login.check();
-		
+		let logged = authService.login.check();		
 		if (!logged) return false;
-	
+					
 		$(document).ready(function() {
 			$scope.oUsers.get();
 		});
 
 		$scope.userLogged = $session.restaurant.usuario;
 
+		/* key: header */
 		$scope.oHeader = {
 			title: "Usuários",
 			selected: '',
@@ -26,6 +26,9 @@ angular.module('Restaurant')
 					$scope.oUsers.get();
 				},
 				fnCreate: function() {
+					
+					if (!authService.permission.check(authService, 2)) return false;
+					
 					$scope.oUsers.this = '';
 					$scope.oHeader.selected = '';
 					$scope.oUsers.form.disabled = false;
@@ -35,6 +38,8 @@ angular.module('Restaurant')
 					this.selected = 2;
 				},
 				fnUpdate: function() {
+					
+					if (!authService.permission.check(authService, 3)) return false;
 
 					let main = $scope.oUsers;
 					
@@ -54,6 +59,8 @@ angular.module('Restaurant')
 
 				},
 				fnDelete: function() {
+					
+					if (!authService.permission.check(authService, 4)) return false;
 
 					let oUser = $scope.oHeader.selected;
 
@@ -68,7 +75,8 @@ angular.module('Restaurant')
 				}
 			}
 		};
-
+		
+		/* key: usuarios */
 		$scope.oUsers = {
 			aStatus: [
 				{label:"Ativo",value:1},
@@ -283,21 +291,44 @@ angular.module('Restaurant')
 				$scope.oUsers.table.loading = true;
 						
 				try {
+					
+					GlobalService.liberacaoComponente.getByUser(oUser.id)
+					.then(aData => {
+						
+						if(aData.length > 0) {
 							
-					GlobalService.usuario.delete(oUser.id)
-					.then(function(response){
+							let title = "<h4 style='color: #CCB81E;'><i class='fa fa-exclamation-triangle'></i> OPSS...</h4>";
+							let text = "Este usuário possui alguns componentes vinculados, e para excluí-lo " + 
+									   "será necessário remover todas as liberações existentes.";
+							
+							alertify.alert(title,text);
+							 return false;
+							
+						} else {
+							
+							GlobalService.usuario.delete(oUser.id)
+							.then(function(response){
 
-						appService.notifIt.alert("success", "Usuário excluído com sucesso");
-						$scope.oHeader.menu.fnRetrieve();
+								appService.notifIt.alert("success", "Usuário excluído com sucesso");
+								$scope.oHeader.menu.fnRetrieve();
 
-					},function(error){
+							},function(error){
+								console.error(exception);
+								appService.notifIt.alert("error", "Ocorreu um erro na exclusão");
+							});
+							
+						}
+						
+					}, exception => {
 						console.error(exception);
-						appService.notifIt.alert("error", "Ocorreu um erro na exclusão");
-					});
+						appService.notifIt.alert("error", "Falha ao consultar as liberações");
+					})
 
 				} catch(e) {							
 					console.log(e);
 					appService.notifIt.alert("error","Ocorreu um erro no serviço");
+				} finally {
+					$scope.oUsers.table.loading = false;
 				}
 
 			},
@@ -545,7 +576,7 @@ angular.module('Restaurant')
 		},true);
 
 		
-		
+		/* key: liberacao componentes */
 		$scope.oLibComponentes = {			
 			aData: [],
 			aCopy: [],
@@ -680,7 +711,7 @@ angular.module('Restaurant')
 			}
 		}
 		
-		
+		/* key: componentes */
 		$scope.oComponentes = {
 			aData: [],
 			selected: '',
