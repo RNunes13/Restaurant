@@ -1,0 +1,166 @@
+<section>
+
+	<div class="box">
+
+		<div class="box-header with-border">
+
+			<header ng-include="'static/views/includes/oHeader.html'"></header>
+
+		</div>
+
+		<div class="box-body" style="">
+
+			<div ng-show="oHeader.menu.selected == 1">				
+			
+				<div class="table-load" ng-show="oCategoriaProduto.table.loading">
+					<img src="static/assets/img/loading.svg" alt="carregando...">
+				</div>
+
+				<div class="row fields-search-step">
+					
+					<div class="col-md-6 col-sm-8 col-xs-12">
+
+						<div class="form-group" uib-dropdown>
+                    		<div class="input-group">
+                        		<label class="input-group-addon btn-addon">
+                        			<i class="fa fa-search" aria-hidden="true"></i>
+                        		</label>
+                        		<label class="input-group-addon btn-addon" uib-dropdown-toggle>
+				 		   			<span class="caret"></span>
+				 				</label>
+                            	<input class="form-control"
+                            		   type="text"
+                            		   placeholder="Digite sua busca"
+                            		   ng-model="oCategoriaProduto.table.search.text"
+                            		   ng-change="oCategoriaProduto.table.search.change()" />                            	
+                        	</div>
+                        	<ul uib-dropdown-menu>
+				      			<li>
+				       	 			<a ng-class="{sel:oCategoriaProduto.table.search.column == -1}" ng-click="oCategoriaProduto.table.search.click(-1)">Todas as Colunas</a>
+				      			</li>
+				      			<li ng-repeat="column in oCategoriaProduto.table.columns" ng-if="$index > 0">
+				        			<a ng-class="{sel:$index == oCategoriaProduto.table.search.column}" ng-click="oCategoriaProduto.table.search.click($index)" ng-bind=column.title></a>
+				      			</li>
+				    		</ul>
+                    	</div>
+						
+					</div>
+
+					<div class="col-md-3 col-sm-4 col-xs-6">
+
+						<div class="form-group">
+                    		<div class="input-group">
+                        		<label class="input-group-addon">
+                        			<i class="fa fa-list" aria-hidden="true"></i>
+                        		</label>
+                            	<select class="form-control"
+                            			ng-model="oCategoriaProduto.table.step.selected"
+                            			ng-options="a.value as a.label for a in oCategoriaProduto.table.step.options"
+                            			ng-change="oCategoriaProduto.table.step.change()">
+                            	</select>
+                        	</div>
+                    	</div>
+					</div>
+					
+					<div class="col-sm-8 visible-sm"></div>
+					
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<button ng-class="oCategoriaProduto.import.btn.this.class"
+								ng-click="oCategoriaProduto.import.btn.this.click()"
+								ng-disabled="oCategoriaProduto.import.btn.this.disabled">
+							<i ng-class="oCategoriaProduto.import.btn.this.icon"></i>
+							<span ng-bind="oCategoriaProduto.import.btn.this.bind"></span>
+						</button>
+						<input type="file" class="btn-import hidden" accept=".csv, .txt" />
+					</div>
+
+				</div>
+
+				<table datatable 
+					   ng-attr-id="oCategoriaProduto.table.id"
+					   dt-instance="oCategoriaProduto.table.instance"
+					   dt-options="oCategoriaProduto.table.options"
+					   dt-columns="oCategoriaProduto.table.columns"
+					   ng-class="oCategoriaProduto.table.class"
+					   width="100%"></table>
+			
+			</div>
+
+			<div ng-show="oHeader.menu.selected > 1">
+			
+				<h4>{{oHeader.menu.selected == 2 ? 'Cadastrar' : 'Editar' }}</h4>
+				
+				<br />
+									
+				<form id="frmTipoProduto" name="Form" class="frm">
+
+					<fieldset ng-disabled="oCategoriaProduto.form.disabled">
+							
+						<div class="row">
+		
+							<div class="col-sm-2 col-xs-12">
+		
+								<div class="form-group">
+									<label>Código</label>
+									<input ng-model="oCategoriaProduto.this.id"
+										   type="text"
+										   class="form-control"
+										   name="codigo"
+										   placeholder="Novo"
+										   readonly>
+								</div>
+		
+							</div>
+		
+							<div class="col-sm-10 col-xs-12">
+		
+								<div class="form-group check-input">
+									<label>Nome <i class="fa fa-asterisk obg"></i></label>
+									<input ng-model="oCategoriaProduto.this.name"
+										   type="text"
+										   class="form-control"
+										   name="nome"
+										   maxlength="60"
+										   required="">
+											
+									<div class="error" ng-show="Form.nome.$error.required && Form.nome.$dirty">
+										<i class="fa fa-exclamation-circle"></i>
+										<div>Nome é obrigatório</div>
+									</div>
+											
+								</div>
+								
+							</div>
+								
+						</div>
+								
+						<div class="row pull-right">
+									
+							<div class="col-sm-12">
+										
+								<button type="button" ng-class="oCategoriaProduto.form.btn.restore.class" ng-click="oCategoriaProduto.form.btn.restore.click()">
+									<i ng-class="oCategoriaProduto.form.btn.restore.icon"></i>
+									<span ng-bind="oCategoriaProduto.form.btn.restore.name"></span> 
+								</button>
+									
+								<button	ng-click="oCategoriaProduto.form.btn.save.click()"								
+										ng-class="Form.$invalid ? 'btn btn-danger' : oCategoriaProduto.form.btn.this.class"												 
+										ng-disabled="Form.$invalid ? true : oCategoriaProduto.form.btn.this.disabled">												
+									<i ng-class="oCategoriaProduto.form.btn.this.icon"></i>
+									<span ng-bind="oCategoriaProduto.form.btn.this.name"></span>											 
+								</button>
+										
+							</div>
+						</div>
+								
+					</fieldset>
+							
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</section>

@@ -4,6 +4,34 @@ angular.module('Restaurant').factory('GlobalService', function(app, $http, $q) {
 	
 	return {
 		
+		categoriaProduto: {
+			
+			get: () => {
+				return app.submit('GET', '/productCategory/getAll');
+			},
+			
+			getById: id => {
+				return app.submit('GET', '/productCategory/' + id);
+			},
+			
+			post: oData => {
+				return app.submit('POST', '/productCategory/', oData);
+			},
+			
+			postList: oData => {
+				return app.submit('POST', '/productCategory/registerList/', oData);
+			},
+			
+			put: oData => {
+				return app.submit('PUT', '/productCategory/', oData);
+			},
+			
+			delete: (id) => {
+				return app.submit('DELETE', '/productCategory/' + id);
+			}
+			
+		},
+		
 		componente: {
 			
 			get: () => {
@@ -60,6 +88,34 @@ angular.module('Restaurant').factory('GlobalService', function(app, $http, $q) {
 			
 			delete: (id_user, id_component) => {
 				return app.submit('DELETE', '/componentPermission/' + id_user + '/' + id_component);
+			}
+			
+		},
+		
+		tipoProduto: {
+			
+			get: () => {
+				return app.submit('GET', '/productType/getAll');
+			},
+			
+			getById: id => {
+				return app.submit('GET', '/productType/' + id);
+			},
+			
+			post: oData => {
+				return app.submit('POST', '/productType/', oData);
+			},
+			
+			postList: oData => {
+				return app.submit('POST', '/productType/registerList/', oData);
+			},
+			
+			put: oData => {
+				return app.submit('PUT', '/productType/', oData);
+			},
+			
+			delete: (id) => {
+				return app.submit('DELETE', '/productType/' + id);
 			}
 			
 		},

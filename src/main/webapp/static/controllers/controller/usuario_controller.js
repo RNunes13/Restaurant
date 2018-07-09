@@ -3,7 +3,7 @@ angular.module('Restaurant')
 .controller('UsuarioController', ['$scope', 'authService', 'appService', 'GlobalService', 'DTOptionsBuilder', '$filter', '$sessionStorage', '$uibModal',
 	function($scope, authService, appService, GlobalService, DTOptionsBuilder, $filter, $session, $modal) {
 
-		let logged = authService.login.check();		
+		let logged = authService.login.check();
 		if (!logged) return false;
 					
 		$(document).ready(function() {
@@ -577,10 +577,11 @@ angular.module('Restaurant')
 		},true);
 
 		
+		
 		/* key: liberacao componentes */
 		$scope.oLibComponentes = {			
-			aData: [],
-			aCopy: [],
+			aData: [], //Dados registrados + Dados adicionados que não estão salvos
+			aCopy: [], //Dados registrados
 			selected: '',
 			aPermission: [
 				{value: 1, bind: 'Con'},
@@ -682,7 +683,21 @@ angular.module('Restaurant')
 				.then(() => {						
 
 					$scope.oLibComponentes.get();
-					appService.notifIt.alert('success', 'Liberações registradas com sucesso');
+					
+					if ($scope.oUsers.this.id === $scope.userLogged.id) {
+						
+						let title = "<h4 style='color: #12B700;'><i class='fa fa-check'></i> Liberações cadastradas</h4>";
+						let text = "As liberações foram registradas com sucesso. No entanto, como você alterou seu usuário, " + 
+								   "para que as alterações funcionem corretamente será necessário sair da aplicação e efetuar " +
+								   "o login novamente";
+						
+						alertify.alert(title, text);
+						
+					} else {
+						
+						appService.notifIt.alert('success', 'Liberações registradas com sucesso');
+						
+					}
 					
 				}, exception => {
 					
@@ -694,15 +709,32 @@ angular.module('Restaurant')
 			},
 			delete: () => {
 				
+				function removeComponent(component) {
+					return component.id != oLib.selected.id;
+				}
+				
 				let oLib = $scope.oLibComponentes;
 				
 				GlobalService.liberacaoComponente.delete($scope.oUsers.this.id, oLib.selected.id)
 				.then(() => {
 					
-					appService.notifIt.alert('success', 'Liberação excluída com sucesso');
-					$scope.oLibComponentes.aData = $scope.oLibComponentes.aData.filter(component => {
-						return component.id != oLib.selected.id;
-					});
+					if ($scope.oUsers.this.id === $scope.userLogged.id) {
+						
+						let title = "<h4 style='color: #12B700;'><i class='fa fa-check'></i> Liberação excluída</h4>";
+						let text = "A liberação foi excluída com êxito. No entanto, como você alterou seu usuário, para " + 
+								   "que as alterações funcionem corretamente será necessário sair da aplicação e efetuar " +
+								   "o login novamente";
+						
+						alertify.alert(title, text);
+						
+					} else {
+						
+						appService.notifIt.alert('success', 'Liberação excluída com sucesso');
+						
+					}
+					
+					$scope.oLibComponentes.aData = $scope.oLibComponentes.aData.filter(removeComponent);					
+					$scope.oLibComponentes.aCopy = $scope.oLibComponentes.aCopy.filter(removeComponent);
 					
 				}, exception => {
 					console.error(exception);

@@ -14,11 +14,34 @@ angular.module('Restaurant')
 			/* Carregando os componentes */
 			let oComponentes = $session.restaurant.componentes;
 			let eComponentes = document.querySelector("#componentes");
-			let bLoaded =  $('#componentes > li').not('.header').not('.homepage').not('.my-profile').length ? true : false;
+			let eHrComponentes = document.querySelector(".hr-componentes");
+			let bLoaded =  $('#componentes > li')
+							.not('.header')
+							.not('.homepage')
+							.not('.my-profile').length ? true : false;
 				
 			if (!bLoaded) {
 				
-				if(oComponentes) {
+				if(oComponentes.length) {
+				
+					if (!eHrComponentes) {
+						let eHr = document.createElement("hr");
+							eHr.className = "hr-componentes";
+					
+						eComponentes.appendChild(eHr)
+					}
+					
+					oComponentes.sort(function(a, b) {
+						let nameA = a.name.toUpperCase();
+						let nameB = b.name.toUpperCase();
+						
+						if (nameA < nameB) return -1;
+						
+						if (nameA > nameB) return 1;
+
+						return 0;
+					});
+					
 					oComponentes.forEach(function(componente) {
 
 						let eLinha = document.createElement("li");

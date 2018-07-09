@@ -38,7 +38,7 @@
 
             <div class="col-sm-6">                
               <div class="form-group check-input">
-                <label>Nome</label>        
+                <label>Nome <i class="fa fa-asterisk obg"></i></label>        
                 <input class="form-control" type="text" name="nome" ng-model="oPerfilUsuario.this.name" placeholder="Nome" required/>
                 <div class="error" ng-show="Form.nome.$error.required">
                   <i class="fa fa-exclamation-circle"></i>
@@ -49,7 +49,7 @@
 
             <div class="col-sm-6">
               <div class="form-group check-input">
-                <label>E-mail</label>        
+                <label>E-mail <i class="fa fa-asterisk obg"></i></label>        
                 <input class="form-control" type="email" name="email" placeholder="E-mail" required
                 	   ng-model="oPerfilUsuario.this.email"
                 	   ng-blur="oPerfilUsuario.checkEmail.isAvailable()"/>
@@ -78,7 +78,7 @@
 
             <div class="col-sm-6">
               <div class="form-group check-input">
-                <label>Login</label>        
+                <label>Login <i class="fa fa-asterisk obg"></i></label>        
                 <input class="form-control" type="text" name="login" maxlength="20" placeholder="Login" required
                 	   ng-model="oPerfilUsuario.this.username"
                 	   ng-blur="oPerfilUsuario.checkUsername.isAvailable()"/>
@@ -105,7 +105,7 @@
 
               <div class="form-group check-input">
 
-                <label>Senha</label>
+                <label>Senha <i class="fa fa-asterisk obg"></i></label>
                 <div class="input-group">
                   <input class="form-control" type="password" name="senha" placeholder="Senha"
                   minlength="6" maxlength="20" ng-model="oPerfilUsuario.this.password" required/>

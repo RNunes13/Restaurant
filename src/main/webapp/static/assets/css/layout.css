@@ -20,6 +20,11 @@ body {
 .sidebar a { color: #B8C7CE !important; }
 .sidebar-menu > li:hover > a, .sidebar-menu > li.active > a, .sidebar-menu > li.menu-open > a { color: #FFF !important; background: #444444 !important; }
 
+.hr-componentes {
+	border-top: 1px solid #313131;
+	margin: 5px 0;
+}
+
 button {
 	outline: none;
 }
@@ -110,6 +115,20 @@ td > select.form-control {
     color: #C13422;
     cursor: pointer;
     line-height: 25px !important;
+}
+
+.legend-lib-component {
+	color: #888;
+	margin-left: 5px;
+}
+
+.legend-lib-component > span {
+	display: block;
+}
+
+i.obg {
+	color: #C13422;
+	font-size: 10px;
 }
 
 @media (max-width: 767px) {

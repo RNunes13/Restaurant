@@ -136,5 +136,6 @@ angular.module('Restaurant').controller('LoginController', ['$scope', 'GlobalSer
 		});
 
 		$('.content-wrapper').css("margin-left", "0px");
+		console.clear();
 	
 }]);

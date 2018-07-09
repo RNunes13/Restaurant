@@ -5,6 +5,10 @@
 			.when('/', {
 				redirectTo: "/login"
 			})
+			.when('/categoriaProduto', {
+				templateUrl: 'static/views/categoria_produto_view.html',
+				controller: 'CategoriaProdutoController'
+			})
 			.when('/home', {
 				templateUrl: 'static/views/home_view.html',
 				controller: 'HomeController'
@@ -20,6 +24,10 @@
 			.when('/perfil', {
 				templateUrl: 'static/views/perfil_usuario_view.html',
 				controller: 'PerfilUsuarioController'
+			})
+			.when('/tipoProduto', {
+				templateUrl: 'static/views/tipo_produto_view.html',
+				controller: 'TipoProdutoController'
 			})
 			.when('/usuarios', {
 				templateUrl: 'static/views/usuario_view.html',

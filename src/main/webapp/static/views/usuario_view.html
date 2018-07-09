@@ -145,7 +145,7 @@
 									<div class="col-sm-6">
 									
 										<div class="form-group">
-											<label>Status <span class="obg"></span></label>
+											<label>Status <i class="fa fa-asterisk obg"></i></label>
 											<select ng-options="a.value as a.label for a in oUsers.aStatus"
 													ng-model="oUsers.this.status"
 													class="form-control"
@@ -158,7 +158,7 @@
 									<div class="col-sm-6">
 									
 										<div class="form-group">
-											<label>Tipo <span class="obg"></span></label>
+											<label>Tipo <i class="fa fa-asterisk obg"></i></label>
 											<select ng-options="a.value as a.label for a in oUsers.aRule"
 													ng-model="oUsers.this.rule"
 													class="form-control"
@@ -176,7 +176,7 @@
 									<div class="col-sm-6">
 									
 										<div class="form-group check-input">
-											<label>Nome <span class="obg"></span></label>
+											<label>Nome <i class="fa fa-asterisk obg"></i></label>
 											<input ng-model="oUsers.this.name"
 												   type="text"
 												   class="form-control"
@@ -196,7 +196,7 @@
 									<div class="col-sm-6">
 									
 										<div class="form-group check-input">
-											<label>E-mail <span class="obg"></span></label>
+											<label>E-mail <i class="fa fa-asterisk obg"></i></label>
 											<input ng-model="oUsers.this.email"
 												   ng-blur="oUsers.checkEmail.isAvailable()"
 												   type="email"
@@ -232,7 +232,7 @@
 									<div class="col-sm-6">
 									
 										<div class="form-group check-input">
-											<label>Login <span class="obg"></span></label>
+											<label>Login <i class="fa fa-asterisk obg"></i></label>
 											<input ng-model="oUsers.this.username"
 												   ng-blur="oUsers.checkUsername.isAvailable()"
 												   type="text"
@@ -263,7 +263,7 @@
 									<div class="col-sm-6">
 									
 										<div class="form-group check-input">
-											<label>Senha <span class="obg"></span></label>
+											<label>Senha <i class="fa fa-asterisk obg"></i></label>
 											<div class="input-group">
 												<input ng-model="oUsers.this.password"
 													   type="password"
@@ -333,6 +333,11 @@
 						
 						<div ng-if="oLibComponentes.aData.length == 0" class="text-center">Nenhum componente liberado</div>
 						
+						<div class="legend-lib-component" ng-if="oLibComponentes.aData.length > 0">
+							<span>Legenda</span>
+							<small>Con - Consulta / Inc - Inclusão / Alt - Alteração / Exc - Exclusão</small>
+						</div>
+						
 						<br />
 						
 						<table ng-if="oLibComponentes.aData.length > 0" class="table table-striped table-hover table-nowrap" width="100%">
@@ -352,11 +357,11 @@
 									<td class="col-name"><span ng-bind="component.name"></span></td>
 									<td>
 										<select class="form-control" ng-model="component.permission">
-												<option value="" disabled="">--</option>
-												<option ng-repeat="p in oLibComponentes.aPermission"
-														ng-value="p.value"
-														ng-bind="p.bind"
-														ng-selected="p.value == component.permission"></option>
+											<option ng-repeat="p in oLibComponentes.aPermission"
+													ng-value="p.value"
+													ng-bind="p.bind"
+													ng-selected="p.value == component.permission">
+											</option>
 										</select>
 									</td>
 									<td class="text-right"><i class="btn-delete fa fa-trash" ng-click="oLibComponentes.btn.delete(component)"></i></td>
