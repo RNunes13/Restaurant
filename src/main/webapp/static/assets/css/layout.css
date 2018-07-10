@@ -131,6 +131,14 @@ i.obg {
 	font-size: 10px;
 }
 
+textarea {
+	resize: vertical;
+}
+
+.info-textarea {
+	margin: 5px 0 15px 0;
+}
+
 @media (max-width: 767px) {
 	.content-wrapper {
   		margin-left: 0 !important;

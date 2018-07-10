@@ -25,6 +25,10 @@
 				templateUrl: 'static/views/perfil_usuario_view.html',
 				controller: 'PerfilUsuarioController'
 			})
+			.when('/produtos', {
+				templateUrl: 'static/views/produtos_view.html',
+				controller: 'ProdutosController'
+			})
 			.when('/tipoProduto', {
 				templateUrl: 'static/views/tipo_produto_view.html',
 				controller: 'TipoProdutoController'

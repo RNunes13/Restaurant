@@ -1,0 +1,239 @@
+<section>
+
+	<div class="box">
+
+		<div class="box-header with-border">
+
+			<header ng-include="'static/views/includes/oHeader.html'"></header>
+
+		</div>
+
+		<div class="box-body" style="">
+
+			<div ng-show="oHeader.menu.selected == 1">				
+			
+				<div class="table-load" ng-show="oProdutos.table.loading">
+					<img src="static/assets/img/loading.svg" alt="carregando...">
+				</div>
+
+				<div class="row fields-search-step">
+					
+					<div class="col-md-6 col-sm-8 col-xs-12">
+
+						<div class="form-group" uib-dropdown>
+                    		<div class="input-group">
+                        		<label class="input-group-addon btn-addon">
+                        			<i class="fa fa-search" aria-hidden="true"></i>
+                        		</label>
+                        		<label class="input-group-addon btn-addon" uib-dropdown-toggle>
+				 		   			<span class="caret"></span>
+				 				</label>
+                            	<input class="form-control"
+                            		   type="text"
+                            		   placeholder="Digite sua busca"
+                            		   ng-model="oProdutos.table.search.text"
+                            		   ng-change="oProdutos.table.search.change()" />                            	
+                        	</div>
+                        	<ul uib-dropdown-menu>
+				      			<li>
+				       	 			<a ng-class="{sel:oProdutos.table.search.column == -1}" ng-click="oProdutos.table.search.click(-1)">Todas as Colunas</a>
+				      			</li>
+				      			<li ng-repeat="column in oProdutos.table.columns" ng-if="$index > 0">
+				        			<a ng-class="{sel:$index == oProdutos.table.search.column}" ng-click="oProdutos.table.search.click($index)" ng-bind=column.title></a>
+				      			</li>
+				    		</ul>
+                    	</div>
+						
+					</div>
+
+					<div class="col-md-3 col-sm-4 col-xs-6">
+
+						<div class="form-group">
+                    		<div class="input-group">
+                        		<label class="input-group-addon">
+                        			<i class="fa fa-list" aria-hidden="true"></i>
+                        		</label>
+                            	<select class="form-control"
+                            			ng-model="oProdutos.table.step.selected"
+                            			ng-options="a.value as a.label for a in oProdutos.table.step.options"
+                            			ng-change="oProdutos.table.step.change()">
+                            	</select>
+                        	</div>
+                    	</div>
+					</div>
+					
+					<div class="col-sm-8 visible-sm"></div>
+					
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<!-- <button ng-class="oProdutos.import.btn.this.class"
+								ng-click="oProdutos.import.btn.this.click()"
+								ng-disabled="oProdutos.import.btn.this.disabled">
+							<i ng-class="oProdutos.import.btn.this.icon"></i>
+							<span ng-bind="oProdutos.import.btn.this.bind"></span>
+						</button>
+						<input type="file" class="btn-import hidden" accept=".csv, .txt" /> -->
+					</div>
+
+				</div>
+
+				<table datatable 
+					   ng-attr-id="oProdutos.table.id"
+					   dt-instance="oProdutos.table.instance"
+					   dt-options="oProdutos.table.options"
+					   dt-columns="oProdutos.table.columns"
+					   ng-class="oProdutos.table.class"
+					   width="100%"></table>
+			
+			</div>
+
+			<div ng-show="oHeader.menu.selected > 1">
+			
+				<h4>{{oHeader.menu.selected == 2 ? 'Cadastrar' : 'Editar' }}</h4>
+				
+				<br />
+									
+				<form id="frmTipoProduto" name="Form" class="frm">
+
+					<fieldset ng-disabled="oProdutos.form.disabled">
+							
+						<div class="row">
+		
+							<div class="col-sm-3 col-xs-12">
+		
+								<div class="form-group">
+									<label>Código</label>
+									<input ng-model="oProdutos.this.id"
+										   type="text"
+										   class="form-control"
+										   name="codigo"
+										   placeholder="Novo"
+										   readonly>
+								</div>
+		
+							</div>
+						
+						</div>
+						
+						<div class="row">
+		
+							<div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+		
+								<div class="form-group check-input">
+									<label>Nome <i class="fa fa-asterisk obg"></i></label>
+									<input ng-model="oProdutos.this.name"
+										   type="text"
+										   class="form-control"
+										   name="nome"
+										   maxlength="60"
+										   required="">
+											
+									<div class="error" ng-show="Form.nome.$error.required && Form.nome.$dirty">
+										<i class="fa fa-exclamation-circle"></i>
+										<div>Nome é obrigatório</div>
+									</div>
+											
+								</div>
+							
+							</div>
+							
+							<div class="col-lg-3 col-md-2 col-sm-6 col-xs-12">								
+								
+								<div class="form-group check-input">
+									<label>Estoque <i class="fa fa-asterisk obg"></i></label>
+									<input ng-model="oProdutos.this.stock"
+										   ng-pattern="/^\d+$/"
+										   type="text"
+										   class="form-control"
+										   name="stock"
+										   maxlength="15"
+										   required="">
+											
+									<div class="error" ng-show="Form.stock.$error.required && Form.stock.$dirty">
+										<i class="fa fa-exclamation-circle"></i>
+										<div>Estoque é obrigatório</div>
+									</div>
+									
+									<div class="error" ng-show="Form.stock.$error.pattern && Form.stock.$dirty">
+										<i class="fa fa-exclamation-circle"></i>
+										<div>Apenas números e positivos (ou zero)</div>
+									</div>
+											
+								</div>
+								
+							</div>
+							
+							<div class="col-lg-3 col-md-2 col-sm-6 col-xs-12">								
+								
+								<div class="form-group check-input">
+									<label>Unidade <i class="fa fa-asterisk obg"></i></label>
+									<input ng-model="oProdutos.this.unit"
+										   type="text"
+										   class="form-control"
+										   name="unit"
+										   maxlength="20"
+										   required="">
+											
+									<div class="error" ng-show="Form.unit.$error.required && Form.unit.$dirty">
+										<i class="fa fa-exclamation-circle"></i>
+										<div>Unidade é obrigatório</div>
+									</div>
+											
+								</div>
+								
+							</div>
+								
+						</div>
+						
+						<div class="row">
+						
+							<div class="col-xs-12">
+							
+								<div class="form-group">
+									<label>Descrição</label>
+									<textarea ng-model="oProdutos.this.description"
+											  ng-change="oProdutos.form.textarea.change()"
+											  ng-trim="false"
+											  class="form-control"
+											  rows="4"
+											  maxlength="1000"
+											  placeholder="(Opcional)">
+									</textarea>
+									<small ng-bind="oProdutos.form.textarea.bind"
+										   ng-class="oProdutos.form.textarea.class"
+										   class="pull-right info-textarea"></small>
+								</div>
+							
+							</div>
+						
+						</div>
+								
+						<div class="row pull-right">
+									
+							<div class="col-sm-12">
+										
+								<button type="button" ng-class="oProdutos.form.btn.restore.class" ng-click="oProdutos.form.btn.restore.click()">
+									<i ng-class="oProdutos.form.btn.restore.icon"></i>
+									<span ng-bind="oProdutos.form.btn.restore.name"></span> 
+								</button>
+									
+								<button	ng-click="oProdutos.form.btn.save.click()"								
+										ng-class="Form.$invalid ? 'btn btn-danger' : oProdutos.form.btn.this.class"												 
+										ng-disabled="Form.$invalid ? true : oProdutos.form.btn.this.disabled">												
+									<i ng-class="oProdutos.form.btn.this.icon"></i>
+									<span ng-bind="oProdutos.form.btn.this.name"></span>											 
+								</button>
+										
+							</div>
+						</div>
+								
+					</fieldset>
+							
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</section>

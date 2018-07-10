@@ -92,6 +92,34 @@ angular.module('Restaurant').factory('GlobalService', function(app, $http, $q) {
 			
 		},
 		
+		produto: {
+			
+			get: () => {
+				return app.submit('GET', '/product/getAll');
+			},
+			
+			getById: id => {
+				return app.submit('GET', '/product/' + id);
+			},
+			
+			post: oData => {
+				return app.submit('POST', '/product/', oData);
+			},
+			
+			postList: oData => {
+				return app.submit('POST', '/product/registerList/', oData);
+			},
+			
+			put: oData => {
+				return app.submit('PUT', '/product/', oData);
+			},
+			
+			delete: (id) => {
+				return app.submit('DELETE', '/product/' + id);
+			}
+			
+		},
+		
 		tipoProduto: {
 			
 			get: () => {
