@@ -64,14 +64,23 @@
 					
 					<div class="col-sm-8 visible-sm"></div>
 					
-					<div class="col-md-3 col-sm-4 col-xs-6">
-						<!-- <button ng-class="oProdutos.import.btn.this.class"
-								ng-click="oProdutos.import.btn.this.click()"
-								ng-disabled="oProdutos.import.btn.this.disabled">
+					<div class="col-md-3 col-sm-4 col-xs-6" uib-dropdown>
+					
+						<button ng-class="oProdutos.import.btn.this.class"
+								ng-disabled="oProdutos.import.btn.this.disabled"
+								uib-dropdown-toggle>
 							<i ng-class="oProdutos.import.btn.this.icon"></i>
 							<span ng-bind="oProdutos.import.btn.this.bind"></span>
 						</button>
-						<input type="file" class="btn-import hidden" accept=".csv, .txt" /> -->
+						<input type="file" class="btn-import hidden" accept=".csv, .txt" />
+						<ul uib-dropdown-menu>
+				      			<li>
+				       	 			<a ng-click="oProdutos.import.model.click()">Baixar modelo</a>
+				      			</li>
+				      			<li>
+				        			<a ng-click="oProdutos.import.btn.this.click()">Escolher arquivo</a>
+				      			</li>
+				    		</ul>
 					</div>
 
 				</div>

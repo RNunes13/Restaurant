@@ -139,6 +139,19 @@ textarea {
 	margin: 5px 0 15px 0;
 }
 
+.paragraph-import-product {
+	text-align: justify;
+	margin: 1px 15px 15px 15px;
+}
+
+.para-alertify { text-align: justify; margin-bottom: 15px !important; }
+
+.help-import-product { margin-top: -20px; }
+
+.radio-import-product { margin-left: 15px; }
+
+.radio-inline > select { width: 30px; }
+
 @media (max-width: 767px) {
 	.content-wrapper {
   		margin-left: 0 !important;

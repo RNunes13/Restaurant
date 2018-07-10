@@ -35,7 +35,7 @@
 		DTDefaultOptions.setDOM('ipt');
 	
 		$rootScope.year = new Date();
-		$rootScope.appVersion = '0.3.0';		
+		$rootScope.appVersion = '0.4.1';		
 	
 	}]);
 })();

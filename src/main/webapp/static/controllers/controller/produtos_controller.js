@@ -1,7 +1,7 @@
 'use strict';
 angular.module('Restaurant')
-.controller('ProdutosController', ['$scope', 'authService', 'appService', 'GlobalService', 'DTOptionsBuilder',
-	function($scope, authService, appService, GlobalService, DTOptionsBuilder) {
+.controller('ProdutosController', ['$scope', 'authService', 'appService', 'GlobalService', 'DTOptionsBuilder', '$uibModal',
+	function($scope, authService, appService, GlobalService, DTOptionsBuilder, $modal) {
 
 		let logged = authService.login.check();
 		if (!logged) return false;
@@ -164,6 +164,318 @@ angular.module('Restaurant')
 							
 						}							
 					}
+				}
+			},
+			import: {
+				delimiter: null,
+				qualifier: {
+					bUse: null,
+					sValue: '"'
+				},
+				header: null,
+				file: '',
+				modal: {
+					instance: '',
+					view: '',
+					size: 'lg',
+					bOpen: false,
+					open: () => {
+						
+						let oImport = $scope.oProdutos.import;
+						
+						oImport.modal.instance = $modal.open({
+							templateUrl: 'static/views/modals/import_produtos_modal.html',
+							controller: 'ModalController',
+							backdrop: 'static',
+							scope: $scope
+					    });
+						
+						oImport.modal.bOpen = true;
+						
+					},
+					close: () => {
+						console.log($scope.oProdutos.import.modal.instance)
+					}
+				},
+				model: {
+					modelo: [
+						{
+							Nome: "nomeProduto1",
+							Estoque: 99,
+							Unidade: "Pacote",
+							Descricao: "Uma descricao do produto, opcional. Caso nao tenha, deixe esta coluna vazia"
+						},
+						{
+							Nome: "nomeProduto2",
+							Estoque: 13,
+							Unidade: "Caixa",
+							Descricao: "Uma descricao do produto, opcional. Caso nao tenha, deixe esta coluna vazia"
+						}
+					],
+					click: () => {
+						
+						let aModel = angular.copy($scope.oProdutos.import.model.modelo);
+						
+						let csv = appService.convertArrayObjToCSV({
+							data: aModel
+						});
+						
+						appService.downloadCSV({
+							csv: csv,
+							filename: 'ImportarProdutos(Modelo).csv'
+						});
+						
+					}
+				},
+				btn: {
+					this: '',
+					importar: {
+						class: 'btn btn-sm btn-block btn-black',
+						bind: 'Importar',
+						icon: 'fa fa-upload',
+						disabled: false,
+						click: () => {
+							
+							if (!authService.permission.check(authService, 2)) return false;							
+							$(".btn-import").val("").trigger("click");
+						}
+					},
+					importando: {
+						class: 'btn btn-sm btn-block btn-black',
+						bind: 'Importando ...',
+						icon: "fa fa-spinner fa-pulse",
+						disabled: true
+					},
+					ajuda: {
+						class: 'btn btn-link',
+						icon: 'fa fa-question-circle',
+						bind: 'Ajuda',
+						click: () => {
+							
+							let delimiter = "<p style='text-align: justify; margin-top: 15px;'><strong>Delimitador</strong> " + 
+											"é quem separa os valores dentro do arquivo. Cada registro deve ser separado por linhas, " +
+											"e em cada linha pode haver mais de um dado, e neste caso, um delimitador é utilizado.</p>";
+							
+							let qualifier = "<p style='text-align: justify; margin-top: 15px;'><strong>Qualificador</strong> " + 
+											"circunscreve os valores no arquivo. Em outras palavras, ele envolve o dado como um valor. " +
+											"Isso é importante quando há um caracter delimitador no dado, para que o dado não seja separado " +
+											"de forma errada, ele deve ser envolvido com um qualificador.</p>";
+							
+							let header = "<p style='text-align: justify; margin-top: 15px;'><strong>Cabeçalho</strong> " + 
+										 "descreve o valor que deve ser preenchido em determinada posição, logo, ele é utilizado apenas " +
+										 "para o preenchimento dos dados, e é ignorado no cadastrado quando existir.</p>";
+							
+							let title = "<h4><i class='fa fa-question-circle'></i> Como importar um arquivo</h4>";
+							let text = "<p style='text-align: justify; margin-bottom: 5px;'>Na importação de um arquivo algumas informações " +
+									   "são importantes para determinar a separação dos dados na hora de cadastra-los. Dentre estas informações " +
+									   "estão o <strong>Delimitador</strong>, <strong>Qualificador</strong> e <strong>Cabeçalho</strong>.</p>" +
+									   delimiter + qualifier + header;
+							
+							alertify.alert(title, text);
+						}
+					},
+					
+					init: () => {
+
+						let oBtn = $scope.oProdutos.import.btn;
+							oBtn.this = angular.copy(oBtn.importando);
+							
+						if (!$scope.$$phase) {
+							$scope.$digest();
+						}
+						
+					},
+					complete: (bSuccess = true, sMsg, showAlert = true) => {
+						
+						let oBtn = $scope.oProdutos.import.btn;
+							oBtn.this = angular.copy(oBtn.importar);
+
+						if (!$scope.$$phase) {
+							$scope.$digest();
+						}
+							
+						if (!showAlert) return false;
+						
+						if (bSuccess) {
+							appService.notifIt.alert("success","Importado com sucesso");
+						} else {
+							appService.notifIt.alert("error", sMsg);							
+						}
+												
+					}
+					
+				},
+				
+				change: () => {
+					
+					let oImport = $scope.oProdutos.import;
+					let fileType = oImport.file.name.split('.');
+						fileType = fileType[fileType.length - 1];
+					
+					if (fileType != "csv" && fileType != "txt") {
+						
+						let title = "<h4 style='color: #CCB81E;'><i class='fa fa-exclamation-triangle'></i> OPSS...</h4>";
+						let text = "A extensão do arquivo escolhido não é válida. Para que a importação seja realizada, " +
+							   "o arquivo deve estar no formato <strong>TXT</strong> ou <strong>CSV</strong>.";
+						
+						alertify.alert(title, text);							
+						return false;
+					}
+					
+					oImport.modal.open();
+
+				},
+				
+				execute: () => {
+					
+					$scope.oProdutos.import.modal.instance.close();
+					
+					let oBtn = $scope.oProdutos.import.btn;
+					let delimiter = $scope.oProdutos.import.delimiter;
+					let header = $scope.oProdutos.import.header;
+					let qualifier = $scope.oProdutos.import.qualifier.bUse ? $scope.oProdutos.import.qualifier.sValue : ''; 
+					let reader = new FileReader();
+					let content;
+					let aRows;
+					let aData = new Array();
+					
+					oBtn.init();
+					
+					reader.onload = function (e) {
+			        	
+			        	content = e.target.result;
+			        	
+			        	if (content) {
+			        		
+			        		if(content.indexOf("\r\n") >= 0){
+			        			aRows = content.split("\r\n");
+				        	}else if(content.indexOf("\n\r") >= 0){
+				        		aRows = content.split("\n\r");
+				        	}else if(content.indexOf("\n") >= 0){
+				        		aRows = content.split("\n");
+				        	}else if(content.indexOf("\r") >= 0){
+				        		aRows = content.split("\r");
+				        	}else{
+				        		aRows = [content];
+				        	}
+			        		
+			        		if (aRows.length) {
+			        			
+			        			if (header) aRows.shift();
+			        			let aRowsInvalid = new Array();			        			
+			        			
+			        			aRows.forEach((row, i) => {
+			        							        								        				
+				        			row = appService.split(row, delimiter, qualifier);
+				        			
+				        			if (row.length === 0) {
+			        					return;
+			        				}
+			        				else if (row.length !== 4 || 
+			        						 row[0].length > 60 || 
+			        						 row[1].length > 15 || 
+			        						 row[2].length > 20 || 
+			        						 row[3].length > 1000) {
+			        					
+			        					let line = header ? i+2 : i+1
+			        					
+			        					aRowsInvalid.push(line);
+			        					return;
+			        				}
+				        			
+				        			let regex = /^\d+$/;				        			
+				        			let stockIsValid = regex.test(row[1]);
+				        			
+				        			if (!stockIsValid) {
+				        				
+				        				let line = header ? i+2 : i+1
+					        					
+					        			aRowsInvalid.push(line);
+					        			return;
+				        				
+				        			}				        			
+				        			
+				        			let oData = {
+				        					"name": row[0],
+				        					"stock": row[1],
+				        					"unit": row[2],
+				        					"description": row[3]
+				        				}
+				        				
+				        			aData.push(oData);			        			
+			        				
+			        			});
+			        			
+			        			if (aData.length) {
+			        							        				
+			        				GlobalService.produto.postList(aData)
+									.then(response => {
+										
+										if (aRowsInvalid.length) {
+											
+											oBtn.complete(null, null, false);
+				        					
+				        					let sLines = aRowsInvalid.join(', ');
+				        					let title = "<h4 style='color: #CCB81E;'><i class='fa fa-exclamation-triangle'></i> Importação concluída</h4>"
+				        					let text = "<p class='para-alertify'>A importação foi finalizada, e alguns dados não foram cadastrados, " +
+				        							   "pois estão inválidos. O tamanho máximo de cada informação e/ou a quantidade de colunas foi excedida</p>" +
+				        							   "<p class='para-alertify'>Antes de tentar importar novamente os dados que não foram registrados, tenha certeza que eles estão válidos. " + 
+				        							   "E na importação do arquivo, escolha os campos corretos.</p>" +
+				        							   "<p class='para-alertify'>Abaixo estão as linhas que apresentaram problemas na importação. Os demais dados foram cadastrados.</p>" +
+				        							   sLines + ".";
+				        					
+				        					alertify.alert(title, text);
+				        					
+				        					
+				        				} else {
+				        					oBtn.complete();
+				        				}
+										
+										$scope.oProdutos.get();
+																
+									}, exception => {
+										console.error(exception);
+										oBtn.complete(false, 'Falha ao cadastrar os dados importados');
+									});
+			        				
+			        			} else {
+			        				
+			        				if (aRowsInvalid.length) {
+			        					
+			        					oBtn.complete(null, null, false);
+			        					
+			        					let title = "<h4 style='color: #CCB81E;'><i class='fa fa-exclamation-triangle'></i> OPSS...</h4>"
+			        					let text = "<p class='para-alertify'>Não há registros válidos para importar.</p>" +
+			        							   "<p class='para-alertify'>Verificando o conteúdo do arquivo, os dados estão inválidos. " +
+			        							   "O tamanho máximo de cada informação e/ou a quantidade de colunas foi excedida.</p>" +
+			        							   "<p class='para-alertify'>Tenha certeza que os dados estão válidos, e que os campos foram " +
+			        							   "escolhidos corretamente na importação do arquivo";
+			        					
+			        					alertify.alert(title, text);
+			        					
+			        					
+			        				} else {
+			        					oBtn.complete(false, 'Não há registros para importar')
+			        				}			        				
+			        				
+			        			}
+			        			
+			        		} else {
+			        			
+			        			oBtn.complete(false, "O arquivo está vazio");
+			        			
+			        		}
+			        		
+			        	} else {
+			        		
+			        		oBtn.complete(false, "O arquivo está vazio");
+			        		
+			        	}
+			        	
+					}
+					
+					reader.readAsText($scope.oProdutos.import.file);
+
 				}
 			},
 			get: () => {
@@ -340,7 +652,9 @@ angular.module('Restaurant')
 				}
 			}
 			
-		} 
+		}
+		
+		$scope.oProdutos.import.btn.this = angular.copy($scope.oProdutos.import.btn.importar); 
 		
 		angular.element(document)
 	    .unbind("dt.produtos.row.click")
@@ -367,6 +681,22 @@ angular.module('Restaurant')
 			});
 	  		
 		});
+		
+		$(document).off('change', '.btn-import')
+		$(document).on('change', '.btn-import', e => {
+			
+			let oImport = $scope.oProdutos.import;
+			let data = e.currentTarget.files;
+	        
+	        if (data.length){
+	           
+	           oImport.file = data[0];
+	    	   
+	           oImport.change();
+	           
+	        }
+			
+	    });
 
 		$scope.$watch('oProdutos.this', oThis => {
 		
