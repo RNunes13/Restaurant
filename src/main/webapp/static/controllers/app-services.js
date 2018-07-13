@@ -300,22 +300,72 @@ angular.module('Restaurant')
 			
 		},
 		
-		convertArrayObjToCSV: (args) => {
+		convertArrayObjToArray: args => {
+			
+			let data = args.data ? args.data : null;
+			
+			if (!data || !data.length) return false;
+			
+			let array = data.map(obj => { 
+				
+				let values = Object.values(obj);
+				
+				values.forEach((s, i) => {						
+					if (typeof s !== "string") values[i] = "" + s;						
+				});
+				
+				return values;
+
+			});
+			
+			return array;
+			
+		},
+		
+		convertArrayToCSV: args => {
 			
 			let data = args.data ? args.data : null;
 			
 			if (!data || !data.length) return false;
 			
 			let delimiter = args.delimiter ? args.delimiter : ',';
-			let qualifier = args.qualifier ? args.qualifier : '"';
+			let qualifier = args.qualifier.value ? args.qualifier.value : '"';
 			let lineDelimiter = args.lineDelimiter ? args.lineDelimiter : '\r\n';
+			let ignoreQualifier = args.qualifier.ignoreColumns ? args.qualifier.ignoreColumns : [];
+			let header = args.header ? args.header : '';
+			
+			let result = (header.join(delimiter)) + lineDelimiter;
+			
+			data.forEach((a, i) => {				
+				let array = a.map((s, i) => { return ignoreQualifier.indexOf(i) === -1 ? (qualifier + s + qualifier) : s; });				
+				result += (array.join(delimiter)) + lineDelimiter ;
+			});
+			
+			return result;
+			
+		},
+		
+		convertArrayObjToCSV: args => {
+			
+			let data = args.data ? args.data : null;
+			
+			if (!data || !data.length) return false;
+			
+			let delimiter = args.delimiter ? args.delimiter : ',';
+			let qualifier = args.qualifier.value ? args.qualifier.value : '"';
+			let lineDelimiter = args.lineDelimiter ? args.lineDelimiter : '\r\n';
+			let ignoreQualifier = args.qualifier.ignoreColumns ? args.qualifier.ignoreColumns : [];
+			let header = args.header ? args.header : '';
 			
 			let keys = Object.keys(data[0]);
-			
 			let ctr;
-			let result = '';
-	        	result += keys.join(delimiter);
-	        	result += lineDelimiter;
+			let result;
+			
+			if (header) {
+				result = (header.join(delimiter)) + lineDelimiter;
+			} else {
+				result = (keys.join(delimiter)) + lineDelimiter;
+			}
 	        
 	        data.forEach(function(item) {
 	        	ctr = 0;
@@ -323,8 +373,13 @@ angular.module('Restaurant')
 	        	keys.forEach(function(key) {
 	            	
 	            	if (ctr > 0) result += delimiter;
-
-	            	result += key !== "Estoque" ? (qualifier + item[key] + qualifier) : item[key];
+	            	
+	            	if (ignoreQualifier.indexOf(key) === -1) {
+	            		result += qualifier + item[key] + qualifier;
+	            	} else {
+	            		result += item[key];
+	            	}
+	            	
 	                ctr++;
 	                    
 	        	});
@@ -346,7 +401,7 @@ angular.module('Restaurant')
 			let filename = args.filename || 'export.csv';
 			
 			if (!csv.match(/^data:text\/csv/i)) {
-	            csv = 'data:text/csv;charset=utf-8,' + csv;
+	            csv = 'data:text/csv;charset=UTF-8,' + '\uFEFF' + csv;
 	        }
 			
 			let data = encodeURI(csv);
