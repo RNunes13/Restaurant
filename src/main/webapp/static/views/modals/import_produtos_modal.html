@@ -1,0 +1,107 @@
+
+<div class="modal-header">
+	<h3 class="modal-title"><i class="fa fa-upload"></i> Importação Produtos</h3>
+</div>
+
+<div class="modal-body">
+
+	<p class="paragraph-modal-product">
+		Para prosseguir com a importação dos produtos, escolha as opções abaixo de acordo com o arquivo escolhido
+	</p>
+	<p class="paragraph-modal-product">
+		Caso tenha dúvida sobre qual opção escolher, clique no botão <strong>AJUDA</strong> para visualizar algumas informações referente as perguntas.
+	</p>
+	
+	<hr />
+	
+	<div class="text-right help-import-product">
+		<button ng-class="oProdutos.import.btn.ajuda.class"
+				ng-click="oProdutos.import.btn.ajuda.click()">
+			<i ng-class="oProdutos.import.btn.ajuda.icon"></i>
+			<span ng-bind="oProdutos.import.btn.ajuda.bind"></span>
+		</button>
+	</div>
+	
+	<form id="frmImportProduto" name="Form" class="frm">
+	
+		<p class="paragraph-modal-product"><strong>Qual o delimitador dos dados?</strong></p>
+		
+		<div class="radio-modal-product">
+			<label class="radio-inline">
+				<input type="radio" name="delimiter" value="\t" ng-model="oProdutos.import.delimiter" required="required" /> Tabulação
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="delimiter" value="\s" ng-model="oProdutos.import.delimiter" /> Espaço
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="delimiter" value=";" ng-model="oProdutos.import.delimiter" /> Ponto e vírgula
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="delimiter" value="," ng-model="oProdutos.import.delimiter" /> Vírgula
+			</label>
+		</div>
+		
+		<br />
+		
+		<p class="paragraph-modal-product"><strong>Deseja utilizar um qualificador de texto?</strong></p>
+		
+		<div class="radio-modal-product">
+			<label class="radio-inline">
+				<input type="radio" name="qualifier" ng-value="true" ng-model="oProdutos.import.qualifier.bUse" required="required" /> Sim. Qual &nbsp;
+				<select ng-model="oProdutos.import.qualifier.sValue" ng-disabled="!oProdutos.import.qualifier.bUse">
+					<option>'</option>
+					<option ng-selected="true">"</option>
+				</select>
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="qualifier" ng-value="false" ng-model="oProdutos.import.qualifier.bUse" /> Não
+			</label>
+		</div>
+		
+		<br />
+		
+		<p class="paragraph-modal-product"><strong>Este arquivo possui um cabeçalho?</strong></p>
+		
+		<div class="radio-modal-product">
+			<label class="radio-inline">
+				<input type="radio" name="header" ng-value="true" ng-model="oProdutos.import.header" required="required" /> Sim
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="header" ng-value="false" ng-model="oProdutos.import.header" /> Não
+			</label>
+		</div>
+	
+	</form>
+
+</div>
+
+<div class="modal-footer">
+
+	<div class="row row-just">
+	
+		<div class="col-sm-4 col-xs-12"></div>
+		
+		<div class="col-sm-4 col-xs-6">
+			<div class="form-group">
+				<button class="btn btn-sm btn-black btn-block"
+						type="button" 
+						ng-click="oProdutos.import.execute()" 
+						ng-disabled="Form.$invalid">
+					<i class="fa fa-check"></i> Concluir
+				</button>
+			</div>
+		</div>
+		
+		<div class="col-sm-4 col-xs-6">
+			<div class="form-group">
+				<button class="btn btn-sm btn-black btn-block"
+						type="button"
+						ng-click="fnCancel()">
+					<i class="fa fa-times"></i> Cancelar
+				</button>
+			</div>
+		</div>
+		
+	</div>
+
+</div>

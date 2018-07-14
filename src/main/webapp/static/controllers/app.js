@@ -1,9 +1,9 @@
 (function(){
 	'use strict';	
-	angular.module('Restaurant', ['ngRoute', 'ui.bootstrap', 'ngStorage', 'datatables'])
+	angular.module('Restaurant', ['ngRoute', 'ui.bootstrap', 'ngStorage', 'datatables','datatables.buttons'])
 	.service('app', ['$q', '$http', function($q, $http) {
 		
-    	this.sIP = '192.168.1.13';
+    	this.sIP = '192.168.1.238';
     	this.sPort = '80';
     	this.sPath = 'restaurant_back';
     	this.sAuthentication = 'Basic ' + btoa('rnunes:@1q2w3e4r');
@@ -35,7 +35,7 @@
 		DTDefaultOptions.setDOM('ipt');
 	
 		$rootScope.year = new Date();
-		$rootScope.appVersion = '0.3.0';		
+		$rootScope.appVersion = '0.4.4';		
 	
 	}]);
 })();

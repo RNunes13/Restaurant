@@ -255,6 +255,166 @@ angular.module('Restaurant')
 			
 		},
 		
+		split: (string, delimiter, qualifier) => {
+			
+			let array = string.split('');
+			let newArray = new Array();
+			
+			if (!qualifier) {
+				
+				newArray = string.split(delimiter);				
+				
+			} else {
+				
+				let bInQualifier = false;
+				let nBeginIndice = 0;
+				let nEndIndice = array.length - 1;
+				let regex = qualifier === "'" ? /'/g : /"/g;
+					
+				array.forEach((char, indice) => {
+						
+					if (char === qualifier) {						
+						bInQualifier = !bInQualifier;
+						
+						if (nEndIndice === indice) {
+							newArray.push(string.slice(nBeginIndice, indice + 1).replace(regex, '').trim());
+							return;
+						}
+						
+					}
+						
+					if (!bInQualifier && char === delimiter) {						
+						newArray.push(string.slice(nBeginIndice, indice).replace(regex, '').trim());
+						nBeginIndice = indice + 1;							
+					}
+					
+					if (nEndIndice === indice) {
+						newArray.push(string.slice(nBeginIndice, indice + 1).replace(regex, '').trim());
+					}					
+						
+				});
+				
+			}
+				
+			return newArray;
+			
+		},
+		
+		convertArrayObjToArray: args => {
+			
+			let data = args.data ? args.data : null;
+			
+			if (!data || !data.length) return false;
+			
+			let array = data.map(obj => { 
+				
+				let values = Object.values(obj);
+				
+				values.forEach((s, i) => {						
+					if (typeof s !== "string") values[i] = "" + s;						
+				});
+				
+				return values;
+
+			});
+			
+			return array;
+			
+		},
+		
+		convertArrayToCSV: args => {
+			
+			let data = args.data ? args.data : null;
+			
+			if (!data || !data.length) return false;
+			
+			let delimiter = args.delimiter ? args.delimiter : ',';
+			let qualifier = args.qualifier.value ? args.qualifier.value : '"';
+			let lineDelimiter = args.lineDelimiter ? args.lineDelimiter : '\r\n';
+			let header = args.header ? args.header : '';
+			
+			let result = (header.join(delimiter)) + lineDelimiter;
+			
+			data.forEach((a, i) => {				
+				let array = a.map((s, i) => {					
+					let isNumber = Number(s);					
+					return !isNumber ? (qualifier + s + qualifier) : s;					
+				});				
+				result += (array.join(delimiter)) + lineDelimiter ;
+			});
+			
+			return result;
+			
+		},
+		
+		convertArrayObjToCSV: args => {
+			
+			let data = args.data ? args.data : null;
+			
+			if (!data || !data.length) return false;
+			
+			let delimiter = args.delimiter ? args.delimiter : ',';
+			let qualifier = args.qualifier.value ? args.qualifier.value : '"';
+			let lineDelimiter = args.lineDelimiter ? args.lineDelimiter : '\r\n';
+			let ignoreQualifier = args.qualifier.ignoreColumns ? args.qualifier.ignoreColumns : [];
+			let header = args.header ? args.header : '';
+			
+			let keys = Object.keys(data[0]);
+			let ctr;
+			let result;
+			
+			if (header) {
+				result = (header.join(delimiter)) + lineDelimiter;
+			} else {
+				result = (keys.join(delimiter)) + lineDelimiter;
+			}
+	        
+	        data.forEach(function(item) {
+	        	ctr = 0;
+	            
+	        	keys.forEach(function(key) {
+	            	
+	            	if (ctr > 0) result += delimiter;
+	            	
+	            	if (ignoreQualifier.indexOf(key) === -1) {
+	            		result += qualifier + item[key] + qualifier;
+	            	} else {
+	            		result += item[key];
+	            	}
+	            	
+	                ctr++;
+	                    
+	        	});
+	            
+	        	result += lineDelimiter;
+	        	
+	        });
+
+	        return result;
+			
+		},
+		
+		downloadCSV: (args) => {
+			
+			let csv = args.csv ? args.csv : null; 
+			
+			if (csv == null) return;
+			
+			let filename = args.filename || 'export.csv';
+			
+			if (!csv.match(/^data:text\/csv/i)) {
+	            csv = 'data:text/csv;charset=UTF-8,' + '\uFEFF' + csv;
+	        }
+			
+			let data = encodeURI(csv);
+			
+			let link = document.createElement('a');
+	        	link.setAttribute('href', data);
+	        	link.setAttribute('download', filename);
+	        	link.click();
+			
+		},
+		
 		dataTableDisplyLength: function(instance, step){
 			
 			if(instance.id){
