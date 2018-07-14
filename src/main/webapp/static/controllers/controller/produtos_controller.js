@@ -256,12 +256,12 @@ angular.module('Restaurant')
 							
 							let qualifier = "<p style='text-align: justify; margin-top: 15px;'><strong>Qualificador</strong> " + 
 											"circunscreve os valores no arquivo. Em outras palavras, ele envolve o dado como um valor. " +
-											"Isso é importante quando há um caracter delimitador no dado, para que o dado não seja separado " +
+											"Isso é importante quando há um caracter delimitador no dado, para que não ocorra a separação " +
 											"de forma errada, ele deve ser envolvido com um qualificador.</p>";
 							
 							let header = "<p style='text-align: justify; margin-top: 15px;'><strong>Cabeçalho</strong> " + 
 										 "descreve o valor que deve ser preenchido em determinada posição, logo, ele é utilizado apenas " +
-										 "para o preenchimento dos dados, e é ignorado no cadastrado quando existir.</p>";
+										 "para auxiliar no preenchimento dos dados, e deve ser ignorado no cadastrado quando existir.</p>";
 							
 							let title = "<h4><i class='fa fa-question-circle'></i> Como importar um arquivo</h4>";
 							let text = "<p style='text-align: justify; margin-bottom: 5px;'>Na importação de um arquivo algumas informações " +
@@ -320,7 +320,7 @@ angular.module('Restaurant')
 						
 						let title = "<h4 style='color: #CCB81E;'><i class='fa fa-exclamation-triangle'></i> OPSS...</h4>";
 						let text = "A extensão do arquivo escolhido não é válida. Para que a importação seja realizada, " +
-							   "o arquivo deve estar no formato <strong>TXT</strong> ou <strong>CSV</strong>.";
+							   	   "o arquivo deve estar no formato <strong>TXT</strong> ou <strong>CSV</strong>.";
 						
 						alertify.alert(title, text);							
 						return false;
@@ -451,8 +451,8 @@ angular.module('Restaurant')
 			        					
 			        					let title = "<h4 style='color: #CCB81E;'><i class='fa fa-exclamation-triangle'></i> OPSS...</h4>"
 			        					let text = "<p class='para-alertify'>Não há registros válidos para importar.</p>" +
-			        							   "<p class='para-alertify'>Verificando o conteúdo do arquivo, os dados estão inválidos. " +
-			        							   "O tamanho máximo de cada informação e/ou a quantidade de colunas foi excedida.</p>" +
+			        							   "<p class='para-alertify'>Verificando o conteúdo do arquivo, com as informações escolhidas na importação, " +
+			        							   "os dados estão inválidos. O tamanho máximo de cada informação e/ou a quantidade de colunas foi excedida.</p>" +
 			        							   "<p class='para-alertify'>Tenha certeza que os dados estão válidos, e que os campos foram " +
 			        							   "escolhidos corretamente na importação do arquivo";
 			        					
