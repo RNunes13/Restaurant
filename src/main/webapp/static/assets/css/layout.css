@@ -139,7 +139,7 @@ textarea {
 	margin: 5px 0 15px 0;
 }
 
-.paragraph-import-product {
+.paragraph-modal-product {
 	text-align: justify;
 	margin: 1px 15px 15px 15px;
 }
@@ -148,7 +148,8 @@ textarea {
 
 .help-import-product { margin-top: -20px; }
 
-.radio-import-product { margin-left: 15px; }
+.radio-modal-product { margin-left: 15px; }
+.checkbox-modal-product { margin: 0 15px; }
 
 .radio-inline > select { width: 30px; }
 

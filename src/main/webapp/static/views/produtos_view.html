@@ -91,24 +91,13 @@
 					</div>
 					
 					<div class="col-lg-2 col-md-3 col-sm-3 col-xs-6">		
-								
-						<div uib-dropdown>
-							<button ng-class="oProdutos.export.btn.this.class"
-									ng-disabled="oProdutos.export.btn.this.disabled"
-									ng-click="oProdutos.export.btn.this.click()"
-									uib-dropdown-toggle>
-								<i ng-class="oProdutos.export.btn.this.icon"></i>
-								<span ng-bind="oProdutos.export.btn.this.bind"></span>
-							</button>
-							<ul uib-dropdown-menu>
-						      	<li>
-						       		<a ng-click="oProdutos.export.csv()">Formato CSV</a>
-						      	</li>
-						      	<li>
-						       		<a ng-click="oProdutos.export.pdf()">Formato PDF</a>
-						      	</li>
-					    	</ul>
-					    </div>
+
+						<button ng-class="oProdutos.export.btn.this.class"
+								ng-disabled="oProdutos.export.btn.this.disabled"
+								ng-click="oProdutos.export.modal.open()">
+							<i ng-class="oProdutos.export.btn.this.icon"></i>
+							<span ng-bind="oProdutos.export.btn.this.bind"></span>
+						</button>
 					    
 					</div>
 

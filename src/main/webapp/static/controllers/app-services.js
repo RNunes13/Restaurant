@@ -331,13 +331,15 @@ angular.module('Restaurant')
 			let delimiter = args.delimiter ? args.delimiter : ',';
 			let qualifier = args.qualifier.value ? args.qualifier.value : '"';
 			let lineDelimiter = args.lineDelimiter ? args.lineDelimiter : '\r\n';
-			let ignoreQualifier = args.qualifier.ignoreColumns ? args.qualifier.ignoreColumns : [];
 			let header = args.header ? args.header : '';
 			
 			let result = (header.join(delimiter)) + lineDelimiter;
 			
 			data.forEach((a, i) => {				
-				let array = a.map((s, i) => { return ignoreQualifier.indexOf(i) === -1 ? (qualifier + s + qualifier) : s; });				
+				let array = a.map((s, i) => {					
+					let isNumber = Number(s);					
+					return !isNumber ? (qualifier + s + qualifier) : s;					
+				});				
 				result += (array.join(delimiter)) + lineDelimiter ;
 			});
 			

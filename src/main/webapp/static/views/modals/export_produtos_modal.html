@@ -1,0 +1,89 @@
+
+<div class="modal-header">
+	<h3 class="modal-title"><i class="fa fa-download"></i> Exportação Produtos</h3>
+</div>
+
+<div class="modal-body">
+
+	<p class="paragraph-modal-product">
+		Para prosseguir com a exportação dos produtos, escolha as opções abaixo como desejar e clique em <strong>Concluir</strong>.
+	</p>
+	
+	<hr />
+
+	<form id="frmExportProduto" name="Form" class="frm">
+	
+		<p class="paragraph-modal-product">
+			<strong>Quais ou qual coluna(s) deseja exportar?</strong>
+		</p>
+		
+		<div class="checkbox-modal-product">
+			<label class="checkbox-inline">
+				<input type="checkbox"
+					   value="-1"
+					   name="columns"
+					   ng-checked="oProdutos.export.aColumnsSelected.indexOf(-1) > -1"
+					   ng-click="oProdutos.export.toggleSelection(-1)"
+					   required/> Todas Colunas
+			</label>
+			<label class="checkbox-inline" ng-repeat="obj in oProdutos.export.aColumns">
+				<input type="checkbox"
+					   name="columns"
+					   ng-value="obj.value"
+					   ng-disabled="oProdutos.export.aColumnsSelected.indexOf(-1) > -1"
+					   ng-checked="oProdutos.export.aColumnsSelected.indexOf(obj.value) > -1"
+					   ng-click="oProdutos.export.toggleSelection(obj.value)"
+					   required/>
+				<span ng-bind="obj.bind"></span>
+			</label>
+		</div>
+		
+		<br />
+		
+		<p class="paragraph-modal-product">
+			<strong>Qual o formato deseja que o arquio seja exportado?</strong>
+		</p>
+		
+		<div class="radio-modal-product">
+			<label class="radio-inline">
+				<input type="radio" name="extension" value="csv" ng-model="oProdutos.export.extension" required="required" /> CSV
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="extension" value="pdf" ng-model="oProdutos.export.extension" /> PDF
+			</label>
+		</div>
+	
+	</form>
+
+</div>
+
+<div class="modal-footer">
+
+	<div class="row row-just">
+	
+		<div class="col-sm-4 col-xs-12"></div>
+		
+		<div class="col-sm-4 col-xs-6">
+			<div class="form-group">
+				<button class="btn btn-sm btn-black btn-block"
+						type="button" 
+						ng-click="oProdutos.export.execute()" 
+						ng-disabled="Form.$invalid || oProdutos.export.aColumnsSelected.length === 0">
+					<i class="fa fa-check"></i> Concluir
+				</button>
+			</div>
+		</div>
+		
+		<div class="col-sm-4 col-xs-6">
+			<div class="form-group">
+				<button class="btn btn-sm btn-black btn-block"
+						type="button"
+						ng-click="fnCancel()">
+					<i class="fa fa-times"></i> Cancelar
+				</button>
+			</div>
+		</div>
+		
+	</div>
+
+</div>

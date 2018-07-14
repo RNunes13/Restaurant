@@ -5,10 +5,10 @@
 
 <div class="modal-body">
 
-	<p class="paragraph-import-product">
+	<p class="paragraph-modal-product">
 		Para prosseguir com a importação dos produtos, escolha as opções abaixo de acordo com o arquivo escolhido
 	</p>
-	<p class="paragraph-import-product">
+	<p class="paragraph-modal-product">
 		Caso tenha dúvida sobre qual opção escolher, clique no botão <strong>AJUDA</strong> para visualizar algumas informações 
 		referente aos campos.
 	</p>
@@ -25,9 +25,9 @@
 	
 	<form id="frmImportProduto" name="Form" class="frm">
 	
-		<p class="paragraph-import-product"><strong>Qual o delimitador dos dados?</strong></p>
+		<p class="paragraph-modal-product"><strong>Qual o delimitador dos dados?</strong></p>
 		
-		<div class="radio-import-product">
+		<div class="radio-modal-product">
 			<label class="radio-inline">
 				<input type="radio" name="delimiter" value="\t" ng-model="oProdutos.import.delimiter" required="required" /> Tabulação
 			</label>
@@ -44,9 +44,9 @@
 		
 		<br />
 		
-		<p class="paragraph-import-product"><strong>Deseja utilizar um qualificador de texto?</strong></p>
+		<p class="paragraph-modal-product"><strong>Deseja utilizar um qualificador de texto?</strong></p>
 		
-		<div class="radio-import-product">
+		<div class="radio-modal-product">
 			<label class="radio-inline">
 				<input type="radio" name="qualifier" ng-value="true" ng-model="oProdutos.import.qualifier.bUse" required="required" /> Sim. Qual &nbsp;
 				<select ng-model="oProdutos.import.qualifier.sValue" ng-disabled="!oProdutos.import.qualifier.bUse">
@@ -61,9 +61,9 @@
 		
 		<br />
 		
-		<p class="paragraph-import-product"><strong>Este arquivo possui um cabeçalho?</strong></p>
+		<p class="paragraph-modal-product"><strong>Este arquivo possui um cabeçalho?</strong></p>
 		
-		<div class="radio-import-product">
+		<div class="radio-modal-product">
 			<label class="radio-inline">
 				<input type="radio" name="header" ng-value="true" ng-model="oProdutos.import.header" required="required" /> Sim
 			</label>

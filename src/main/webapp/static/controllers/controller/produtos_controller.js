@@ -194,9 +194,6 @@ angular.module('Restaurant')
 						
 						oImport.modal.bOpen = true;
 						
-					},
-					close: () => {
-						console.log($scope.oProdutos.import.modal.instance)
 					}
 				},
 				model: {
@@ -290,6 +287,12 @@ angular.module('Restaurant')
 						
 						let oBtn = $scope.oProdutos.import.btn;
 							oBtn.this = angular.copy(oBtn.importar);
+							
+						let oImport = $scope.oProdutos.import;
+							oImport.delimiter = null;
+							oImport.qualifier.bUse = null;
+							oImport.qualifier.sValue = '"';
+							oImport.header = null;
 
 						if (!$scope.$$phase) {
 							$scope.$digest();
@@ -329,12 +332,13 @@ angular.module('Restaurant')
 				
 				execute: () => {
 					
-					$scope.oProdutos.import.modal.instance.close();
+					let oImport = $scope.oProdutos.import;		
+						oImport.modal.instance.close();
 					
-					let oBtn = $scope.oProdutos.import.btn;
-					let delimiter = $scope.oProdutos.import.delimiter;
-					let header = $scope.oProdutos.import.header;
-					let qualifier = $scope.oProdutos.import.qualifier.bUse ? $scope.oProdutos.import.qualifier.sValue : ''; 
+					let oBtn = oImport.btn;
+					let delimiter = oImport.delimiter;
+					let header = oImport.header;
+					let qualifier = oImport.qualifier.bUse ?oImport.qualifier.sValue : ''; 
 					let reader = new FileReader();
 					let content;
 					let aRows;
@@ -481,8 +485,67 @@ angular.module('Restaurant')
 			},
 			/* key: produtos.export */
 			export: {
-				csv: () => {
+				extension: '',
+				aColumns: [
+					{value: 0, bind: "Código"},
+					{value: 1, bind: "Nome"},
+					{value: 2, bind: "Estoque"},
+					{value: 3, bind: "Unidade"},
+					{value: 4, bind: "Descrição"}
+				],
+				aColumnsSelected: [],
+				toggleSelection: value => {
+					
+					let oExport = $scope.oProdutos.export;
+					let i = oExport.aColumnsSelected.indexOf(value);
+					
+					if (i > -1) oExport.aColumnsSelected.splice(i, 1);
+					else oExport.aColumnsSelected.push(value);
+					
+				},
+ 				modal: {
+					instance: '',
+					view: '',
+					size: 'lg',
+					bOpen: false,
+					open: () => {
+						
+						let oImport = $scope.oProdutos.export;
+						
+						oImport.modal.instance = $modal.open({
+							templateUrl: 'static/views/modals/export_produtos_modal.html',
+							controller: 'ModalController',
+							backdrop: 'static',
+							scope: $scope
+					    });
+						
+						oImport.modal.bOpen = true;
+						
+					}
+				},
+				execute: () => {
+					
+					let oExport = $scope.oProdutos.export;
+					let columns = new Array();
+					
+					columns = oExport.aColumnsSelected.indexOf(-1) > -1 ? [":not(.control)"] : angular.copy(oExport.aColumnsSelected);
+					
+					columns.sort((a, b) => {						
+						return a < b ? -1 : a > b ? 1 : 0;						
+					});
+					
+					if (oExport.extension === 'csv') oExport.csv(columns);
+					else oExport.pdf(columns);
+					
+					$scope.oProdutos.export.modal.instance.close();
+					
+					oExport.extension = '';
+					oExport.aColumnsSelected = [];
+					
+				},				
+				csv: (columns) => {
 
+					let cols = angular.copy(columns);
 					let oTable = $scope.oProdutos.table.instance.DataTable;
 					let aData = angular.copy($scope.oProdutos.aData);
 					
@@ -493,8 +556,8 @@ angular.module('Restaurant')
 					
 					let oBtn = $scope.oProdutos.export.btn;
 						oBtn.init();
-						
-					let oExport  = oTable.buttons.exportData({columns:":not(.control)"});
+											
+					let oExport  = oTable.buttons.exportData({columns: cols});
 					let aHead = oExport.header;
 					let aBody = oExport.body;						
 					
@@ -502,8 +565,7 @@ angular.module('Restaurant')
 						data: aBody,
 						delimiter: ',',
 						qualifier: {
-							value: '"',
-							ignoreColumns: [0, 2]
+							value: '"'
 						},
 						header: aHead
 					});
@@ -518,8 +580,9 @@ angular.module('Restaurant')
 					oBtn.complete();
 					
 				},
-				pdf: () => {
+				pdf: (columns) => {
 					
+					let cols = angular.copy(columns);
 					let oTable = $scope.oProdutos.table.instance.DataTable;
 					let aData = angular.copy($scope.oProdutos.aData);
 					
@@ -531,23 +594,24 @@ angular.module('Restaurant')
 					let oBtn = $scope.oProdutos.export.btn;
 						oBtn.init();
 						
-					let oExport  = oTable.buttons.exportData({columns:":not(.control)"});
+					let oExport  = oTable.buttons.exportData({columns: cols});
 					let aHead = oExport.header;
 					let aBody = oExport.body;
+
+					let widths = [ 
+						{col:"Código", width:40},
+						{col:"Nome", width:"auto"},
+						{col:"Estoque", width:70},
+						{col:"Unidade", width:110},
+						{col:"Descrição", width:"*"}
+					];
 					
-					aHead = aHead.map(header => { return {text:header.toUpperCase(), fillColor:'#6D3127', color:'#FFFFFF', fontSize:8, alignment:'center'} }); 
-					aBody = aBody.map(a =>{ 
-						
-						let b = a.map((s, i) => { 
-							
-							if (i === 0) return {text: ""+s, fontSize:8, alignment:"center", paddingLeft:0};
-							else return {text:""+s, fontSize:8, alignment:"left", paddingLeft:0};							
-						
-						});
-						
-						return b;
-						
-					});
+					widths = widths.filter( obj => { return aHead.indexOf(obj.col) > -1 ? obj : null });
+					widths = widths.map(obj => {return obj.width});					
+					
+					aHead = aHead.map(header => { return {text:header.toUpperCase(), fillColor:'#6D3127', color:'#FFF', fontSize:8, alignment:'center'} });
+					
+					aBody = aBody.map(a => { return a.map((s, i) => { return {text:""+s, fontSize:8, alignment:"left", paddingLeft:0}; }); });
 
 					let body = new Array();
 						body.push(aHead);
@@ -565,7 +629,7 @@ angular.module('Restaurant')
 	                  	  	alignment: "left",
 	                  	  	fontSize: 10,
 	                  	  	margin: [0, 10, 0, 5]
-					}
+						};
 					
 					let title = {
 							text: 'Produtos',
@@ -584,7 +648,7 @@ angular.module('Restaurant')
 					            {
 									table: {
 										headerRows: 1,
-										widths: [ 40, "auto", 70, 110, "*" ],
+										widths: widths,
 					                	body: body	                        	  
 									},
 					            	layout: {
