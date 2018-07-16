@@ -1,0 +1,90 @@
+@charset "UTF-8";
+
+/* -------------------- BUTTONS -------------------- */
+.btn-black {
+	background-color: #50525A;
+	color: #FFF !important;
+	outline: none;
+}
+
+.btn-black:hover {
+	background-color: #727480;
+	color: #FFF !important;
+}
+
+.btn-delete {
+	font-size: 20px !important;
+    margin-right: 10px;
+    color: #C13422;
+    cursor: pointer;
+    line-height: 25px !important;
+}
+
+/* -------------------- FORMS COMPONENTS -------------------- */
+.frm .form-control {
+	border: 1px solid #d4d4d4 !important;
+	border-radius: 5px;
+}
+
+.frm .form-control:focus {
+	border: 1px solid #d73925 !important;
+}
+
+.form-group {
+	margin-bottom: 20px !important;
+}
+
+.input-group {
+	border-bottom: 1px solid #DDD;
+    transition: all 0.5s ease;
+}
+
+/* -------------------- NAV TABS -------------------- */
+.nav-tabs > li > a{	
+	height: 30px;
+	padding: 4px 20px !important;
+	color: #C13422;
+}
+
+.nav-tabs > li.active > a {
+	font-weight: bold;
+}
+
+/* -------------------- ROWS -------------------- */
+.row.row-just {
+    margin-left: -1px;
+    margin-right: -1px;
+} 
+
+.row.row-just > div{
+    padding-right: 1px;
+    padding-left: 1px;
+}
+
+/* -------------------- TABLES -------------------- */
+.row-adjust > td {
+	padding: 3px 0 !important;
+}
+
+.row-adjust .col-icon > i {
+	padding-left: 20px !important;
+	line-height: 25px;
+}
+.row-adjust .col-name > span {
+	padding-left: 10px !important;
+	line-height: 25px;
+}
+.row-adjust .col-icon {
+	width: 1px;
+}
+
+td > select.form-control {
+	width: auto;
+	height: 25px;
+	padding: 0 6px;
+	border: none;
+    border-bottom: 1px solid #e1e1e1;
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+}

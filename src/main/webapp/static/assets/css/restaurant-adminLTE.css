@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+.main-header .logo {
+	background-color: #C13422 !important;
+}
+
+.main-header .navbar, .skin-red .main-header li.user-header {
+	background-color: #C74433 !important;
+}
+
+.skin-red .main-header .navbar .sidebar-toggle:hover {
+	background-color: #C13422 !important;
+}
+
+.sidebar-menu > li.active > a {
+	border-left-color: #C13422 !important;
+}
+
+.sidebar-menu > li.header {
+	color: #FFF !important; background: #313131 !important;
+}
+
+.wrapper, .main-sidebar, .left-side {
+	background-color: #242424 !important;
+}
+
+.control-sidebar-dark, .control-sidebar-dark + .control-sidebar-bg {
+	background-color: #242424 !important;
+}
+
+.sidebar a {
+	color: #B8C7CE !important;
+}
+
+.sidebar-menu > li:hover > a, .sidebar-menu > li.active > a, .sidebar-menu > li.menu-open > a {
+	color: #FFF !important; background: #444444 !important;
+}
+
+.box-header .box-title {
+	font-size: 30px !important;
+}
