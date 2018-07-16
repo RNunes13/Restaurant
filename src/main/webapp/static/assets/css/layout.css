@@ -1,122 +1,24 @@
 @charset "UTF-8";
 
+/* -------------------- REESTILIZAÇÃO DAS TAGS -------------------- */
 body {
 	height: 100%;
 	display: none;
-}
-
-.not-found { color: #C13422; }
-
-/* .content-wrapper { margin-left: 0 !important; } */
-
-.main-header .logo { background-color: #C13422 !important; }
-.main-header .navbar, .skin-red .main-header li.user-header { background-color: #C74433 !important; }
-.skin-red .main-header .navbar .sidebar-toggle:hover { background-color: #C13422 !important; }
-
-.sidebar-menu > li.active > a { border-left-color: #C13422 !important; }
-.sidebar-menu > li.header { color: #FFF !important; background: #313131 !important; }
-.wrapper, .main-sidebar, .left-side { background-color: #242424 !important; }
-.control-sidebar-dark, .control-sidebar-dark + .control-sidebar-bg { background-color: #242424 !important; }
-.sidebar a { color: #B8C7CE !important; }
-.sidebar-menu > li:hover > a, .sidebar-menu > li.active > a, .sidebar-menu > li.menu-open > a { color: #FFF !important; background: #444444 !important; }
-
-.hr-componentes {
-	border-top: 1px solid #313131;
-	margin: 5px 0;
-}
-
-button {
-	outline: none;
-}
-
-.logoHeader {
-	height: 40px;
 }
 
 a {
 	text-decoration: none !important;
 }
 
-.box-header .box-title {
-	font-size: 30px !important;
-}
-
-.frm .form-control {
-	border: 1px solid #d4d4d4 !important;
-	border-radius: 5px;
-}
-
-.frm .form-control:focus {
-	border: 1px solid #d73925 !important;
-}
-
-.btn-black {
-	background-color: #50525A;
-	color: #FFF !important;
+button {
 	outline: none;
 }
 
-.btn-black:hover {
-	background-color: #727480;
-	color: #FFF !important;
+textarea {
+	resize: vertical;
 }
 
-.form-group {
-	margin-bottom: 20px !important;
-}
-
-.input-group {
-	border-bottom: 1px solid #DDD;
-    transition: all 0.5s ease;
-}
-
-.nav-tabs > li > a{	
-	height: 30px;
-	padding: 4px 20px !important;
-	color: #C13422;
-}
-
-.nav-tabs > li.active > a {
-	font-weight: bold;
-}
-
-.row.row-just {
-    margin-left: -1px;
-    margin-right: -1px;
-} 
-
-.row.row-just > div{
-    padding-right: 1px;
-    padding-left: 1px;
-}
-
-.row-adjust > td {
-	padding: 3px 0 !important;
-}
-
-.row-adjust .col-icon > i { padding-left: 20px !important; line-height: 25px;}
-.row-adjust .col-name > span { padding-left: 10px !important; line-height: 25px;}
-.row-adjust .col-icon { width: 1px; }
-
-td > select.form-control {
-	width: auto;
-	height: 25px;
-	padding: 0 6px;
-	border: none;
-    border-bottom: 1px solid #e1e1e1;
-    background-color: transparent;
-    outline: none;
-    box-shadow: none;
-}
-
-.btn-delete {
-	font-size: 20px !important;
-    margin-right: 10px;
-    color: #C13422;
-    cursor: pointer;
-    line-height: 25px !important;
-}
-
+/* --------------- LEGENDA - LIBERAÇÃO COMPONENTES --------------- */
 .legend-lib-component {
 	color: #888;
 	margin-left: 5px;
@@ -126,15 +28,7 @@ td > select.form-control {
 	display: block;
 }
 
-i.obg {
-	color: #C13422;
-	font-size: 10px;
-}
-
-textarea {
-	resize: vertical;
-}
-
+/* --------------- INFORMAÇÃO DOS ELEMENTOS TEXTAREA --------------- */
 .info-textarea {
 	margin: 5px 0 15px 0;
 }
@@ -144,15 +38,42 @@ textarea {
 	margin: 1px 15px 15px 15px;
 }
 
-.para-alertify { text-align: justify; margin-bottom: 15px !important; }
+/* --------------- MODALS (POSIÇÃO DOS ELEMENTOS) --------------- */
+.help-import-product {
+	margin-top: -20px;
+}
 
-.help-import-product { margin-top: -20px; }
+.radio-modal-product {
+	margin-left: 15px;
+}
 
-.radio-modal-product { margin-left: 15px; }
-.checkbox-modal-product { margin: 0 15px; }
+.checkbox-modal-product {
+	margin: 0 15px;
+}
 
-.radio-inline > select { width: 30px; }
+.radio-inline > select {
+	width: 30px;
+}
 
+/* --------------- ESTILOS GERAIS --------------- */
+.para-alertify {
+	text-align: justify; margin-bottom: 15px !important;
+}
+
+.not-found {
+	color: #C13422;
+}
+
+.hr-componentes {
+	border-top: 1px solid #313131;
+	margin: 5px 0;
+}
+
+.logoHeader {
+	height: 40px;
+}
+
+/* --------------- RESPONSIVIDADE --------------- */
 @media (max-width: 767px) {
 	.content-wrapper {
   		margin-left: 0 !important;

@@ -1,9 +1,10 @@
 @charset "UTF-8";
 
-@import url("layout.css");
-@import url("login.css");
-@import url("scroll.css");
-@import url("dataTables-restaurant.css");
-@import url("skins.css");
 @import url("form-validation.css");
 @import url("header.css");
+@import url("layout.css");
+@import url("login.css");
+@import url("restaurant-adminLTE.css");
+@import url("restaurant-bootstrap.css");
+@import url("restaurant-datatables.css");
+@import url("scroll.css");

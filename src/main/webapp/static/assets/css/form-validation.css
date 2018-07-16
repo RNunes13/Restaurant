@@ -1,3 +1,8 @@
+i.obg {
+	color: #C13422;
+	font-size: 10px;
+}
+
 .check-input {
 	position: relative;
 }
@@ -9,14 +14,22 @@
 	bottom: 7px;
 }
 
-.error-password, .attention-password { right: 45px; }
+.error-password, .attention-password {
+	right: 45px;
+}
 
-.error, .error-password { color: #DD4B39; }
+.error, .error-password {
+	color: #DD4B39;
+}
 
-.attention, .attention-password { color: #CDA712; }
+.attention, .attention-password {
+	color: #CDA712;
+}
 
-.check-input:hover .error div, .check-input:hover .error-password div,
-.check-input:hover .attention div, .check-input:hover .attention-password div{
+.check-input:hover .error div,
+.check-input:hover .error-password div,
+.check-input:hover .attention div,
+.check-input:hover .attention-password div{
 	display: block;
 }
 
@@ -29,6 +42,12 @@
 	border-radius: 3px;
 }
 
-.error div, .error-password div { background-color: #FFD5D5; border: #DD4B39 solid 1px; }
+.error div, .error-password div {
+	background-color: #FFD5D5;
+	border: #DD4B39 solid 1px;
+}
 
-.attention div, .attention-password div { background-color: #FFFADE; border: #CDA712 solid 1px; }
+.attention div, .attention-password div {
+	background-color: #FFFADE;
+	border: #CDA712 solid 1px;
+}

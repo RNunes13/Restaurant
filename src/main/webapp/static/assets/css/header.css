@@ -56,7 +56,3 @@
 .button:hover div.info {
 	display: block;
 }
-
-@media screen and (max-height: 768px) {
-
-}
